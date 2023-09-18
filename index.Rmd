@@ -23,7 +23,7 @@ Femke van den Bos
 
 ---
 
-Please note that some of the material is adopted from [Gerko Vink](https://github.com/gerkovink/R), Statistics Denmark, and [Laurent Smeets](https://github.com/Laurent-Smeets-GSS-Account/RGhana), Ghana Statistical Service.
+Please note that some of the material is adopted from [Gerko Vink](https://github.com/gerkovink/R) (Statistics Denmark) and [Laurent Smeets](https://github.com/Laurent-Smeets-GSS-Account/RGhana) (Ghana Statistical Service).
 
 
 ---
@@ -102,6 +102,8 @@ Here you can find all the lecture slides. Please note that the first page of the
 
 - [Lecture 1](Contents/Lectures/Week 1/Lecture_week_1.html){target="_blank"}
 - [Lecture 2](Contents/Lectures/Week 2/Lecture_week_2.html){target="_blank"}
+- [Lecture 3](Contents/Lectures/Week 3/Lecture_week_3.html){target="_blank"}
+- [Lecture 4](Contents/Lectures/Week 4/Lecture_week_4.html){target="_blank"}
 
 
 ## Column 2

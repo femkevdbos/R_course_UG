@@ -1,7 +1,7 @@
 ---
 title: 'Lecture 4'
-author: "Data Wrangling"
-date: "11-09-2023"
+author: "Data Visualization (pt.1)"
+date: "18-09-2023"
 output:
   ioslides_presentation:
     fig_height: 15
