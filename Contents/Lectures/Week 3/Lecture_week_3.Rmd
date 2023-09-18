@@ -1,0 +1,354 @@
+---
+title: 'Lecture 3'
+author: "Data Wrangling"
+date: "13-09-2023"
+output:
+  ioslides_presentation:
+    fig_height: 15
+    fig_width: 20
+    logo: "figures/UoG_logo_small.png"
+    transition: faster
+    smaller: true
+  beamer_presentation: default
+---
+```{r setup, include = FALSE}
+library(tidyverse)
+library(lubridate)
+```
+
+# Recap of Last Week
+
+## Recap Lecture 2
+- Foundations of R
+- Subsetting / calling elements
+- Logical operators
+- Extra tips
+  - Code style
+- Importing data
+- Understanding data
+- Joining datasets
+- Exporting data
+
+# Outline of Lecture 3
+
+## Outline of Lecture 3
+- What is data wrangling?
+- Tidyverse package + pipe operator
+- Tidying data
+  - Renaming, dates and times, pivot longer and wider
+- Data manipulation
+  - Head, tail
+  - Filter, select, arrange
+  - Grouping, summarizing, mutating
+
+# Data Wrangling
+
+## What is data wrangling?
+"Data wrangling is the process of cleaning, structuring, and transforming data that is suitable for analysis." 
+
+~ Chat GPT 
+
+"It is a crucial step in the data analysis pipeline and is often considered one of the most time-consuming and challenging aspects of working with data."
+
+~ Chat GPT 
+
+
+Today we split it up into:
+
+1. Tidying data
+2. Data manipulation
+
+# Tidyverse package + pipe operator
+
+## Tidyverse
+- Tidyverse is a collection of tools for data analysis and visualization
+- Split up into multiple packages
+- `library(tidyverse)` loads multiple packages:
+  - **ggpplot** - data visualization
+  - **tidyr** - data tidying
+  - **dplyr** - data manipulation
+- This is the main package we will use!
+  
+## Pipe Operator
+- Core feature of the tidyverse collection of packages
+- In the magrittr package
+- We will use the "%>%" operator -> the pipe operator
+- Chains together multiple operations in a sequence
+- Passing the result of one operation as input to the next operation
+- Readability - conciseness - ease of debugging - reproducibility
+
+## Example of the Pipe Operator
+```{r}
+# Taking the mean
+1:5 %>%
+  mean()
+
+# Chickweight average weight per diet
+ChickWeight %>% 
+  group_by(Diet) %>% 
+  summarise(avg_weight = mean(weight))
+```
+Trick: crtl/cmd + shift + m 
+
+# Tidying Data
+
+## Tidy Data
+<center>
+<img src="figures/tidy_data.png" alt="HTML5 Icon" width = 70%>
+</center>
+- Each column is a single variable
+- Each row is a single observation
+- Each cell is a value
+
+## Not Tidy Data
+```{r}
+# Create "not tidy (ugly)" dataset
+ugly_data <- data.frame("column_1" = c("01-01-2023", "01-01-2023", 
+                                       "02-01-2023", "02-01-2023"),
+                        "market" = c("Makola", "Kaneshie",
+                                     "Makola", "Kaneshie"),
+                        "product_1" = c(10, 12, 15, 14),
+                        "product_2" = c(30, 35, 28, 30))
+# Print data
+ugly_data
+```
+
+## Renaming
+- Renaming columns
+- Be very careful with this!
+```{r}
+# What column(s) would you rename?
+ugly_data
+```
+
+## Renaming
+- Renaming columns
+- Be very careful with this!
+```{r}
+# Rename columns (new_name = old_name)
+renamed_data <- ugly_data %>%
+  rename(date = column_1,
+         "pepper container" = product_1,
+         "big basket of onions" = product_2)
+
+# Print data
+renamed_data
+```
+
+## Dates and Times
+- Function `as.Date()` such that R knows it is a date variable
+```{r}
+# Check if it is seen as a date variable
+typeof(renamed_data$date)
+year(renamed_data$date)
+
+# Change to a date variable, and add year, month, day columns (lubridate package)
+data_with_dates <- renamed_data %>%
+  mutate(date = as.Date(date, "%d-%m-%Y"), # Specify format of date here
+         year = year(date),
+         month = month(date),
+         month_name = month.name[month],
+         day = day(date))
+```
+
+## Dates and Times (continued)
+```{r}
+# Display data
+data_with_dates
+```
+
+## Pivoting
+- Useful to reshape data
+- Remember: 
+  - Each column is a single variable
+  - Each row is a single observation
+  - Each cell is a value
+- `pivot_longer()`: lengthens data (cols, names_to, values_to)
+- `pivot_wider()`: widens data (names_from, values_from)
+
+## Pivot Longer
+```{r}
+# Pivot longer
+longer_data <- data_with_dates %>%
+  pivot_longer(cols = c("pepper container", "big basket of onions"), 
+               names_to = "product", 
+               values_to = "price")
+
+# Print data
+longer_data
+```
+
+## Pivot Wider
+```{r}
+# Pivot wider
+wider_data <- longer_data %>%
+  pivot_wider(names_from = product,
+              values_from = price)
+
+# Print data
+wider_data
+```
+
+# Data Manipulation
+
+## Dplyr
+Main package for data manipulation
+
+- head()
+- tail()
+- select()
+- filter()
+- arrange()
+- mutate()
+- summarize()
+- group_by()
+
+## Head 
+Display the top rows of the data 
+
+- How does R determine the order of the rows?
+```{r}
+# Display the top 5 rows
+head(ChickWeight, 5)
+```
+
+## Tail
+Display the bottom rows of the data
+
+- How does R determine the order of the rows?
+- Let us use a pipe
+```{r}
+# Display the bottom 3 rows
+ChickWeight %>%
+  tail(3)
+
+# Save the bottom 20 rows into a new dataframe
+chick_weight_bottom_10 <- ChickWeight %>%
+  tail(20)
+```
+- When is this useful?
+
+## Select
+Select columns of your dataset
+
+- Why/when would you use this?
+```{r}
+# Display columns in data
+colnames(ChickWeight)
+
+# Select specific columns
+selected_columns <- ChickWeight %>%
+  select(Chick, weight)
+
+# Display columns in new data
+colnames(selected_columns)
+```
+
+## Filter (1)
+Filter rows based on specific variable values
+
+- Why/when would you use this?
+```{r}
+# Filter based on diet
+diet_1 <- ChickWeight %>%
+  filter(Diet == 1)
+
+# Print data
+diet_1
+```
+
+## Filter (2)
+Additional example
+```{r}
+# Filter based on weight
+weight_over_300 <- ChickWeight %>%
+  filter(weight > 300)
+
+# Print data
+weight_over_300
+```
+What other examples could you think of?
+
+## Arrange
+Arrange data either by value or alphabetically
+
+- Why/when would you use this?
+```{r}
+# Arrange by weight - automaticall ascending
+arranged_data <- ChickWeight %>%
+  arrange(weight)
+
+# Display top and bottom
+head(arranged_data, 5)
+tail(arranged_data, 5)
+```
+
+## Arrange (2)
+You can also arrange by descending order
+```{r}
+# Arrange descending - method 1
+descending_weight_1 <- ChickWeight %>%
+  arrange(desc(weight))
+
+# Arrange descending - method 2
+descending_weight_2 <- ChickWeight %>%
+  arrange(-weight)
+```
+
+## Mutate
+Mutate columns or create new columns
+
+- Why/when would you use this?
+```{r}
+# Add additional column specifying the weight classification
+chick_weight_classified <- ChickWeight %>%
+  mutate(weight_class = case_when(weight < 50 ~ "less than 50",
+                                  (weight >= 50 & weight < 100) ~ "50-99",
+                                  (weight >= 100 & weight < 200) ~ "100-199",
+                                  (weight >= 200 & weight < 300) ~ "200-299",
+                                  weight >= 300 ~ "300 and more"))
+# Display data
+head(chick_weight_classified)
+```
+
+## Summarise
+Summarise your data
+
+- Why/when would you use this?
+```{r}
+# Summarise the average weight
+ChickWeight %>%
+  summarise(average_weight = mean(weight))
+
+# Summarise the total unique number of chicks in the data
+ChickWeight %>%
+  summarize(distinct_chicks = n_distinct(Chick),
+            count = n())
+```
+
+## Group by
+Group data, very useful!
+
+- Why/when would you use this?
+- Can often be combined with summarising!
+```{r}
+# Group by weight classification and summarise number of chicks
+chick_weight_classified %>%
+  group_by(weight_class) %>%
+  summarise(distinct_chicks = n_distinct(Chick))
+```
+
+- How would you improve this?
+
+## Group by (continued)
+Many applications!!
+```{r}
+# Group by weight classification and summarise number of chicks
+chick_weight_classified %>%
+  group_by(Diet) %>%
+  summarise(distinct_chicks = n_distinct(Chick),
+            average_weight = mean(weight))
+```
+Can you think of more ways to use it?
+
+# End of Lecture 3

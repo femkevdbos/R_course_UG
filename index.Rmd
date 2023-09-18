@@ -1,0 +1,143 @@
+---
+title: "Statistical Programming with R"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: scroll
+---
+
+<!-- ```{r setup, include=FALSE} -->
+<!-- knitr::opts_chunk$set(echo = TRUE) -->
+<!-- library(vembedr) -->
+
+<!-- ``` -->
+
+# Intro {.sidebar}
+
+This website covers the materials for the course introducing R to University of Ghana students. It is a one semester course, with a weekly lecture, weekly homework assignments, and a final exam/assignment.
+
+---
+
+Instructor: 
+Femke van den Bos
+
+---
+
+Please note that some of the material is adopted from [Gerko Vink](https://github.com/gerkovink/R), Statistics Denmark, and [Laurent Smeets](https://github.com/Laurent-Smeets-GSS-Account/RGhana), Ghana Statistical Service.
+
+
+---
+# Overview
+
+## Column 1
+
+### Outline
+R is rapidly becoming the standard platform for data manipulation, visualization and analysis and has a number of advantages over other statistical software packages. A wide community of users contribute to R, resulting in an enormous coverage of statistical procedures, including many that are not available in any other statistical program. Furthermore, it is highly flexible for programming and scripting purposes, for example when manipulating data or creating professional plots. However, R lacks standard GUI menus, as in SPSS for example, from which to choose what statistical test to perform or which graph to create. As a consequence, R is more challenging to master. Therefore, this course offers an introduction to statistical programming in R. Students learn to operate R, make plots, and do advanced statistical programming and data manipulation. 
+
+
+The course starts at a very basic level and builds up gradually. No previous experience with R is required.
+
+## Column 2
+
+### Course schedule 
+| Week  | Day | Time      | Topic                               | 
+|:------------|:------------|:------------------------------------|
+| *Week 1* |Friday - October 13|9:00-12:00 | Introduction to R |
+| *Week 2* |Friday - October 20 |9:00-12:00 | Foundations of R |
+| *Week 3* |Friday - October 27 |9:00-12:00 | Data Wrangling |
+| *Week 4* |Friday - November 3 |9:00-12:00 | Data Visualization (pt.1) |
+| *Week 5* |Friday - November 10 |9:00-12:00 | Data Visualization (pt.2) |
+| *Week 6* |Friday - November 17 |9:00-12:00 | Guest Lecture: GSS Data Science Team |
+| *Week 7* |Friday - November 24 |9:00-12:00 | Introduction to Data Modelling in R |
+| *Week 8* |Friday - December 1 |9:00-12:00 | More on Data Modelling |
+|  |Friday - December 8 |9:00-12:00 | Time for working on the report / catching up |
+| *Recap* |Friday - December 15 |9:00-12:00 | Recap Lecture + Assistance with Report |
+| |Friday - December 22 |9:00-12:00 | Time for working on the report |
+|  | *Christmas break!*  |    |    |Presentations (pt.1) |
+| *Presentations * |Friday - January 19 |9:00-12:00 | Presentations (pt.2) |
+
+
+# Installing R + RStudio
+
+## Column 1
+
+### **1. Install `R`**
+`R` can be obtained [here](https://cran.r-project.org). We won't use `R` directly in the course, but rather call `R` through `RStudio`. Therefore it needs to be installed.
+
+### **2. Install `RStudio` Desktop**
+Rstudio is an Integrated Development Environment (IDE). It can be obtained as stand-alone software [here](https://www.posit.co/downloads/). The free and open source `RStudio Desktop` version is sufficient.
+
+### **3. Start RStudio and install the following packages. **
+Please make sure you have a stable internet connection when installing the packages. Execute the following lines of code in the console window:
+```{r eval=FALSE, echo = TRUE}
+install.packages(c("tidyverse", # Collection: including dplyr (data manipulation), ggplot2 (visualizations) 
+                   "magrittr", # Pipe operator
+                   "readxl",# Read (input) Excel files
+                   "lubridate", # Working with data variables
+                   "writexl", # Create Excel output files
+                   "MASS" # Statistics (regressions and models)
+                   ), 
+                 dependencies = TRUE)
+```
+
+If you are not sure where to execute code, use the following figure to identify the console:
+<center>
+  <img src="figures/rstudio_packages.png" alt="HTML5 Icon" width = 50%>
+</center>
+Just copy and paste the installation command and press the return key. When asked 
+
+```{r eval = FALSE, echo = TRUE}
+Do you want to install from sources the package which needs 
+compilation? (Yes/no/cancel)
+```
+
+type `Yes` in the console and press the return key. 
+
+# Lectures
+
+## Column 1
+
+### Lecture Slides
+Here you can find all the lecture slides. Please note that the first page of the slides shows the date on which the slides were last updated. We adapt the course as we go. To ensure that you work with the latest iteration of the course materials, we advice all course participants to access the materials online.
+
+- [Lecture 1](Contents/Lectures/Week 1/Lecture_week_1.html){target="_blank"}
+- [Lecture 2](Contents/Lectures/Week 2/Lecture_week_2.html){target="_blank"}
+
+
+## Column 2
+
+### Useful References
+- [`R` for Data Science (2nd edition)](https://r4ds.hadley.nz/)
+- [Statistical Inference via Data Science](https://moderndive.com/index.html)
+- [Advanced R](https://adv-r.hadley.nz/)
+- [R Programming for Data Science](https://bookdown.org/rdpeng/rprogdatascience/)
+- [The Tidyverse Style Guide](https://style.tidyverse.org)
+- [Datacamp Tutorial on Pipes](https://www.datacamp.com/tutorial/pipe-r-tutorial)
+- [The `ggplot2` Reference Package](https://ggplot2.tidyverse.org/reference/)
+
+The above links are useful references that connect to the materials. 
+
+# Practicals
+
+## Column 1
+
+### Practical Assignments
+Here you can find the assignments for the weekly practicals. Please note that these might also be adapted as we go, so make sure you use the most recent file when doing the practical.
+
+- [Practical 1](Contents/Practicals/Week 1/Practical_week_1.html){target="_blank"}
+
+ 
+## Column 2
+
+### Solutions to Practicals
+After the weekly deadline, the solution to the practical will be uploaded here.
+
+<!-- - [Solution Practical 1](Contents/Practicals/Solution_Practical_1.html){target="_blank"} -->
+
+# Assessment
+
+## Final Assessment
+The instructions to the final assessment can be found here, along with required data sets.
+
+- [Final Assessment - Instructions](Contents/Assessements/Final_assessment.html)
+

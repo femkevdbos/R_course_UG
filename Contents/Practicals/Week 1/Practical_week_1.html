@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Statistical Programming with R" />
+
+
+<title>Practical A</title>
+
+<script src="libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Practical A</h1>
+<h4 class="author">Statistical Programming with R</h4>
+
+</div>
+
+
+<p>Today we are going to get acquainted with <code>R</code>. A
+convenient way to work with <code>R</code> is through
+<code>RStudio</code> which adds many features and convenient options to
+the plain <code>R</code> interface. Most of these features go beyond the
+scope of this course, but as you will develop your <code>R</code> skill
+set, you might run into the need for them and hence <code>RStudio</code>
+so it is worthwhile to get to know <code>RStudio</code> right from the
+beginning.</p>
+<p>If you have no experience with <code>R</code>, you will learn the
+most from following this document step by step. If you have some
+experience with <code>R</code> already, I suggest you try solving the
+questions without looking at the answers/walkthrough. You can always
+refer to the solutions as needed.</p>
+<p>If you have any questions or if you feel that some code should be
+elaborated, feel free to ask.</p>
+<hr />
+<div id="exercises" class="section level4">
+<h4>Exercises</h4>
+<p>We start with the very basics and will move towards more advanced
+operations in <code>R</code>. First we will get acquainted with the
+language and the environment we work in.</p>
+<hr />
+<ol style="list-style-type: decimal">
+<li><strong>Open <code>RStudio</code></strong></li>
+</ol>
+<p>The following window will appear. You might be faced with a bit
+different layout, but don’t despair. Close to everything can be
+configured to your liking, including the colour scheme!<br />
+<img src="figuresPractical/fig1.png" alt="alt text" /></p>
+<p>RStudio is divided in 3 panes, namely the console, the
+environment/history pane and the pane where we can access our files,
+plots, the help files, make packages and view our data objects. You can
+change the order of the panes to your liking through
+<code>RStudio</code>’s preferences.</p>
+<p>If we open an <code>R</code>-script (i.e. a file that contains
+<code>R</code> code), a fourth pane opens.</p>
+<hr />
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Create a new <code>R</code>-script</strong></li>
+</ol>
+<p>In the top left you will find <img src="figuresPractical/fig2.png"
+alt="alt text" />. Click it and select <code>R</code>-script. (Or you
+can use the shortcut, Ctrl+Shift+N)</p>
+<p>A new pane opens, and we can start typing our code. It is preferable
+to work from an <code>R</code>-script instead of directly working in the
+console for at least the following reasons (there are many more).</p>
+<ol style="list-style-type: lower-alpha">
+<li>You will not lose code, since <code>RStudio</code> caches files even
+if they are not saved.</li>
+<li>You log your own work. Code does not disappear over time, as you
+save the code in a separate file.</li>
+<li>With access to your <code>R</code>-script and data, others are able
+to exactly reproduce your work. Reproducibility is becoming increasingly
+more important, and this is where <code>RStudio</code> really
+excels.</li>
+<li>You become more organized in coding, as you focus on creating
+readable code. In the long run, this will result in you becoming a more
+efficient programmer. Remember: efficient code runs faster.</li>
+</ol>
+<hr />
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Type the following in your new
+<code>R</code>-script</strong></li>
+</ol>
+<pre class="r"><code># Price of the trotro from Accra to Cape Coast
+trotro_fare &lt;- 100</code></pre>
+<p>The <code>#</code> tells <code>R</code> that everything that follows
+in that specific line is not to be evaluated as code. Hence, you can use
+the <code>#</code> to create a comment in your <code>R</code>-scripts
+(or to temporarily leave out a line of code). I used <code>#</code> here
+to elaborate that the following line is the code to allocate the price
+of the trotro from Accra to Cape Coast to an object named
+<code>trotro_fare</code>.</p>
+<p>The line <code>trotro_fare &lt;- 100</code> assigns the value
+<code>100</code> to object <code>trotro_fare</code>. When you run your
+code, it will be saved. The value 100 and the name
+<code>trotro_fare</code> are chosen to illustrate assigning in
+<code>R</code>. You might as well assign <code>130,000,000,000</code> to
+<code>total_import_Ghana_2022</code> if you like. Really, anything
+goes.</p>
+<hr />
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Select both lines of code and run the code by pressing
+Ctrl+Enter or Ctrl+R</strong></li>
+</ol>
+<p>Your code is executed and now appears in the console. If you type
+<code>trotro_fare</code> in the console and press enter, <code>R</code>
+will return the assigned value. Try it! <img
+src="figuresPractical/fig3.png" alt="alt text" /></p>
+<p>The shortcut Ctrl+Enter is your friend: it runs the current
+selection, or, if nothing is selected, the current line. If Ctrl+Enter
+yields no result, you probably have selected the console pane. You can
+switch to the code pane by moving the mouse cursor and clicking on the
+desired line in the code pane, or through Ctrl+1. Alternatively, you can
+move to the console through Ctrl+2.</p>
+<p>You have now successfully entered and executed your first code
+snippet in <code>R</code> by using <code>RStudio</code>.</p>
+<hr />
+<ol start="5" style="list-style-type: decimal">
+<li><strong>Save your code file as <code>Practical_A.R</code> in a
+folder named <code>Practicals</code></strong></li>
+</ol>
+<p>You can use the standard Ctrl+S or click on the icon <img
+src="figuresPractical/fig4.png" alt="alt text" /> in the code pane.</p>
+<p>Your document is now saved. We saved it in a separate folder so that
+we are able to create a project out of our practicals.</p>
+<hr />
+<ol start="6" style="list-style-type: decimal">
+<li><strong>Create a project by clicking on <img
+src="figuresPractical/fig5.png" alt="alt text" /> in the top-right
+corner of <code>RStudio</code></strong></li>
+</ol>
+<p>Select “New Project”, click “Existing Directory” and navigate to the
+folder where you have just saved your code. When all is done, click on
+“Create Project”</p>
+<p>You will notice in the files pane that a file
+<code>Practicals.RProj</code> has been created</p>
+<p><img src="figuresPractical/fig6.png" /></p>
+<p>The possibility to organize your work in projects is one of the
+benefits of using <code>RStudio</code>. Within a project, everything is
+relative to the <code>.Rproj</code> file. This means that if you share
+the folder with someone else, this person only has to open the
+<code>.Rproj</code> file to be able to access and run all code and
+documents involved with this project. Again, when considering
+reproducability of research, working in projects is a huge
+advantage.</p>
+<hr />
+<ol start="7" style="list-style-type: decimal">
+<li><strong>Open the <code>R</code>-script
+<code>notebook.R</code></strong></li>
+</ol>
+<p>Download the file (to the same <code>Practicals</code> directory you
+just created) and open it in <code>RStudio</code> using Ctrl+O(pen) and
+browse to the position where you saved the file .</p>
+<hr />
+<ol start="8" style="list-style-type: decimal">
+<li><strong>Have a look at the code in the script (but don’t run it just
+yet!) and try to decipher what is going on.</strong></li>
+</ol>
+<p>If you do not understand what you are looking at, please ask for
+help.</p>
+<hr />
+<ol start="9" style="list-style-type: decimal">
+<li><strong>Compile the script as a <code>html</code> file</strong></li>
+</ol>
+<p>Click on the <img src="figuresPractical/fig7.png" alt="alt text" />
+icon and select <code>html</code> as the notebook output format.</p>
+<p>The benefit of using html as an output format lies in the dimensional
+properties of a web-page. Especially when dealing with long code-files,
+large output from analyses or many graphs, exporting your file as html
+is much more convenient. You can simply scroll down or up to see the
+rest, instead of having to flip through pages back and forth to compare
+code, graphs or output.</p>
+<hr />
+<ol start="10" style="list-style-type: decimal">
+<li><strong>Inspect the <code>html</code> file you have
+created</strong></li>
+</ol>
+<p>The notebook feature in <code>R-Studio</code> is very convenient; it
+runs and converts any <code>R</code>-code to a readable file where code
+and output are visible. There is, however, an even better format to
+integrate <code>R</code>-code with text into a single document:
+Markdown!</p>
+<hr />
+<ol start="11" style="list-style-type: decimal">
+<li><strong>Open the file <code>markdown.Rmd</code></strong></li>
+</ol>
+<p>Have a look at the code in the script and make sure that you
+understand what is going on. If you do not understand what you are
+looking at, please ask someone for help.</p>
+<hr />
+<ol start="12" style="list-style-type: decimal">
+<li><strong>Click <code>Knit HTML</code> to compile the file into a
+html-document.</strong></li>
+</ol>
+<p>If necessary, install the required packages. Inspect the html file
+and compare it to the one you have created from the
+<code>notebook.R</code> file. Content should be about just the same, but
+the layout is nicer and offers many more possibilities.</p>
+<p>In the rest of this course we will teach one another about
+<code>R</code> by showing our code and the resulting output in the
+plenary sessions. The notebook and markdown functionality in
+<code>R-Studio</code> are very convenient ways to do this. One of the
+reasons for using either format is that we can assess code on every
+machine, without the need for the packages / functionality that you used
+but someone else might not have. Please use one of these formats for the
+other practicals.</p>
+<hr />
+<ol start="13" style="list-style-type: decimal">
+<li><strong>If not open anymore, open your script by clicking on
+<code>Practical_A.R</code> in the files pane. Run both lines of code
+again and inspect the contents of the global environment by typing and
+running <code>ls()</code></strong></li>
+</ol>
+<p>The following is returned by <code>R</code></p>
+<pre class="r"><code>ls()</code></pre>
+<pre><code>## [1] &quot;trotro_fare&quot;</code></pre>
+<p>There is one object in the environment, and it is called
+<code>trotro_fare</code>. If you look at the environment pane, you can
+quickly see the corresponding information (i.e. there is no need to type
+<code>ls()</code>) and you can see that object <code>trotro_fare</code>
+contains a value. You can even see which value.</p>
+<p>A value is the most basic object in <code>R</code>. The next step up
+in objects is a vector, followed by a matrix, followed by an array.
+Eventually, each of these objects can be stored in a list. We will learn
+about vectors, matrices and arrays later today.</p>
+<hr />
+<p>End of <code>Practical A</code>. Play around with <code>R</code> and
+<code>Rstudio</code> if you like. Maybe create a notebook or markdown
+template file for the rest of the course? Or try to figure out how to
+change the colour scheme for <code>RStudio</code> (always a
+favorite!)</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
