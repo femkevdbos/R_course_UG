@@ -14,12 +14,16 @@ output:
 
 # Intro {.sidebar}
 
-This website covers the materials for the course introducing R to University of Ghana students. It is a one semester course, with a weekly lecture, weekly homework assignments, and a final exam/assignment.
+This website covers the materials for the course introducing R to University of Ghana students. It is a one semester course, with a weekly lecture, weekly homework assignments, and a final assignment and presentation.
 
 ---
 
-Instructor: 
+Instructors: 
 Femke van den Bos
+...
+
+Teaching assistants:
+...
 
 ---
 
