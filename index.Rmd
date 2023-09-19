@@ -45,7 +45,7 @@ The course starts at a very basic level and builds up gradually. No previous exp
 
 ### Course schedule 
 | Week  | Day | Time      | Topic                               | 
-|:------------|:------------|:------------------------------------|
+|:------------|:------------|:------------|:------------------------------------|
 | *Week 1* |Friday - October 13|9:00-12:00 | Introduction to R |
 | *Week 2* |Friday - October 20 |9:00-12:00 | Foundations of R |
 | *Week 3* |Friday - October 27 |9:00-12:00 | Data Wrangling |
@@ -108,6 +108,7 @@ Here you can find all the lecture slides. Please note that the first page of the
 - [Lecture 2](Contents/Lectures/Week 2/Lecture_week_2.html){target="_blank"}
 - [Lecture 3](Contents/Lectures/Week 3/Lecture_week_3.html){target="_blank"}
 - [Lecture 4](Contents/Lectures/Week 4/Lecture_week_4.html){target="_blank"}
+- [Lecture 5](Contents/Lectures/Week 5/Lecture_week_5.html){target="_blank"}
 
 
 ## Column 2
@@ -129,8 +130,6 @@ The above links are useful references that connect to the materials.
 
 ### Practical Assignments
 Here you can find the assignments for the weekly practicals. Please note that these might also be adapted as we go, so make sure you use the most recent file when doing the practical.
-
-- [Practical 1](Contents/Practicals/Week 1/Practical_week_1.html){target="_blank"}
 
  
 ## Column 2

@@ -4,11 +4,11 @@ author: "Data Visualization (pt.1)"
 date: "18-09-2023"
 output:
   ioslides_presentation:
-    fig_height: 15
-    fig_width: 20
     logo: "figures/UoG_logo_small.png"
     transition: faster
     smaller: true
+    widescreen: no
+    self_contained: false
   beamer_presentation: default
 ---
 ```{r setup, include = FALSE}
@@ -35,7 +35,7 @@ library(tidyverse)
 - Introduction into visualization
 - Visualization in R
   - Base R graphs
-  - Introduction into `ggplot`
+  - `ggplot2`
 
 # Story Telling with Data
 
@@ -138,17 +138,17 @@ e.	Present the data in your report and make sure you are easily able to explain 
 - Often easier + more convenient to use `ggplot2`!
 
 ## Histogram in base R
-```{r}
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
 hist(ChickWeight$weight)
 ```
 
 ## Boxplot in base R
-```{r}
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
 boxplot(weight ~ Diet, data = ChickWeight)
 ```
 
 ## Scatterplot in base R
-```{r}
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
 plot(x = ChickWeight$Time, y = ChickWeight$weight)
 ```
 
@@ -174,33 +174,29 @@ With `ggplot2` you
 `ggplot2` then takes care of the details
 
 ## `ggplot`
-```{r}
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
 ggplot()
 ```
 
 ## Data
-```{r}
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
 ggplot(ChickWeight)
 ```
 
 ## Aesthetics
-```{r}
-ggplot(ChickWeight,
-       aes(x = Time, 
-           y = weight))
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
+ggplot(ChickWeight, aes(x = Time, y = weight))
 ```
 
 ## Geometric object
-```{r}
-ggplot(ChickWeight,
-       aes(x = Time, 
-           y = weight)) +
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
+ggplot(ChickWeight, aes(x = Time, y = weight)) + 
   geom_point()
 ```
 
 ## General Rules for `ggplot`
-ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +
-   <GEOM_FUNCTION>()
+ggplot(data = DATA, mapping = aes(MAPPINGS)) +
+   GEOM_FUNCTION()
 
 Add layers with +
 
@@ -209,8 +205,8 @@ Put + at the end of a line
 Map aesthetics with aes()
 
 ## Additional Layers
-```{r}
-ggplot(ChickWeight,
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
+extra_layer <- ggplot(ChickWeight,
        aes(x = Time, 
            y = weight)) +
   geom_point() +
@@ -219,9 +215,14 @@ ggplot(ChickWeight,
   theme_minimal()
 ```
 
+## Additional Layers
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+plot(extra_layer)
+```
+
 ## More advanced plots
-```{r}
-ggplot(ChickWeight,
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
+more_advanced_plot <- ggplot(ChickWeight,
        aes(x = Time, 
            y = weight,
            color = Diet)) +
@@ -231,6 +232,11 @@ ggplot(ChickWeight,
   theme_minimal()
 ```
 There are many different types of plot you could make! Can you think of more?
+
+## More advanced plots
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+plot(more_advanced_plot)
+```
 
 ## Aesthetics
 
@@ -244,7 +250,7 @@ There are many different types of plot you could make! Can you think of more?
 - ...
 
 ## New dataset: boys
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(mice)     # Boys dataset
 glimpse(boys)
 ```
@@ -295,7 +301,6 @@ plot(gg)
 - geom_histogram
 - geom_boxplot
 - geom_density
-- and more...
 
 ## Geoms: Bar
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
