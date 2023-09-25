@@ -144,5 +144,5 @@ After the weekly deadline, the solution to the practical will be uploaded here.
 ## Final Assessment
 The instructions to the final assessment can be found here, along with required data sets.
 
-- [Final Assessment - Instructions](Contents/Assessements/Final_assessment.html)
+- [Final Assessment - Instructions](Contents/Assessements/Instructions_final_assessment.pdf)
 

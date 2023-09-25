@@ -21,7 +21,6 @@ output:
 - Explanation of assessment
 - Explanation of R and RStudio
 - Getting started in R!
-- 
 
 # Introduction
 
