@@ -301,5 +301,19 @@ We are not going to learn a list of functions that exist, but during the course 
 - Use Google/ChatGPT
 - Ask the lecturer/teaching assistant
 - Do not be afraid to try!! Just write code and see if it works!
+
+# GSS Data
+
+## How to access GSS data?
+- GSS Data required for the final assignment
+- Main website: https://statsghana.gov.gh
+  - Look at published reports
+  - Which areas are still unexplored?
+- Microdata: https://microdata.statsghana.gov.gh
+  - Choose data that interests you
+  - Request data ASAP
+- Statsbank: https://statsbank.statsghana.gov.gh
+  - Already generates tables
+  - First insights into data
     
 # End of Lecture 1

@@ -1,5 +1,5 @@
 ---
-title: "Statistical Programming with R"
+title: "R for Data Analysis"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -19,16 +19,22 @@ This website covers the materials for the course introducing R to University of 
 ---
 
 Instructors: 
-Femke van den Bos
-...
+
+[Femke van den Bos](femke.bos@statsghana.gov.gh)
+
+[Edem Titriku](edem.titriku@statsghana.gov.gh)
 
 Teaching assistants:
-...
+
+Foster Agyare Okyere
+
+Joshua Mawutor
+
+Racheal Naa Adjeley Adjei 
 
 ---
 
-Please note that some of the material is adopted from [Gerko Vink](https://github.com/gerkovink/R) (Statistics Denmark) and [Laurent Smeets](https://github.com/Laurent-Smeets-GSS-Account/RGhana) (Ghana Statistical Service).
-
+Please note that some of the material is adopted from [Steffen Eriksen](https://www.youtube.com/c/SteffensClassroom) (University of Groningen), [Laurent Smeets](https://github.com/Laurent-Smeets-GSS-Account/RGhana) (Ghana Statistical Service), [Gerko Vink](https://github.com/gerkovink/R) (Statistics Denmark), and other online resources.
 
 ---
 # Overview
@@ -36,17 +42,19 @@ Please note that some of the material is adopted from [Gerko Vink](https://githu
 ## Column 1
 
 ### Outline
-R is rapidly becoming the standard platform for data manipulation, visualization and analysis and has a number of advantages over other statistical software packages. A wide community of users contribute to R, resulting in an enormous coverage of statistical procedures, including many that are not available in any other statistical program. Furthermore, it is highly flexible for programming and scripting purposes, for example when manipulating data or creating professional plots. However, R lacks standard GUI menus, as in SPSS for example, from which to choose what statistical test to perform or which graph to create. As a consequence, R is more challenging to master. Therefore, this course offers an introduction to statistical programming in R. Students learn to operate R, make plots, and do advanced statistical programming and data manipulation. 
+Welcome to our R for Data Analysis Course! 
 
+This comprehensive program will take you from R novice to a skilled data analyst. You'll start by mastering the foundations of R, move on to importing and understanding data, become proficient in data wrangling (including tidying data and data manipulation), learn the art of data visualization, and finally, explore data modeling. 
 
-The course starts at a very basic level and builds up gradually. No previous experience with R is required.
+Our main goals are to provide you with a solid understanding of R, equip you with data analysis skills, and foster critical thinking to uncover the stories hidden within your data. During the course, you'll get the chance to use real-world data from the Ghana Statistical Service (GSS) in a practical case study. Whether you're new to R or already have some experience, this course is tailored to help you excel in the field of data analysis.
+
 
 ## Column 2
 
 ### Course schedule 
 | Week  | Day | Time      | Topic                               | 
 |:------------|:------------|:------------|:------------------------------------|
-| *Week 1* |Friday - October 13|9:00-12:00 | Introduction to R |
+| *Week 1* |Friday - October 13 |9:00-12:00 | Introduction to R |
 | *Week 2* |Friday - October 20 |9:00-12:00 | Foundations of R |
 | *Week 3* |Friday - October 27 |9:00-12:00 | Data Wrangling |
 | *Week 4* |Friday - November 3 |9:00-12:00 | Data Visualization (pt.1) |
@@ -114,6 +122,9 @@ Here you can find all the lecture slides. Please note that the first page of the
 ## Column 2
 
 ### Useful References
+The following links are useful references that connect to the material: 
+
+- [Steffen's Classroom (YouTube videos)](https://www.youtube.com/playlist?list=PLn6B3DUkuU_1iUUe008rXIjG_t3IyzoM3)
 - [`R` for Data Science (2nd edition)](https://r4ds.hadley.nz/)
 - [Statistical Inference via Data Science](https://moderndive.com/index.html)
 - [Advanced R](https://adv-r.hadley.nz/)
@@ -122,22 +133,31 @@ Here you can find all the lecture slides. Please note that the first page of the
 - [Datacamp Tutorial on Pipes](https://www.datacamp.com/tutorial/pipe-r-tutorial)
 - [The `ggplot2` Reference Package](https://ggplot2.tidyverse.org/reference/)
 
-The above links are useful references that connect to the materials. 
-
 # Practicals
 
 ## Column 1
 
 ### Practical Assignments
-Here you can find the assignments for the weekly practicals. Please note that these might also be adapted as we go, so make sure you use the most recent file when doing the practical.
+Here you can find the assignments for the weekly homework assignments. Please note that these might also be adapted as we go, so make sure you use the most recent file when working on them.
 
- 
+The deadline for each assignment is before the next lecture!
+
+- [Practical Assignment 1 (Deadline: xxx)](Contents/Practicals/Week 1 Assignment.pdf)
+
+
+### Data
+The data that should be used for the practicals can be found here.
+
+- [2021 PHC - Education Data](Contents/Practicals/data/education.xlsx)
+- [2021 PHC - Housing Data](Contents/Practicals/data/housing.xlsx)
+- [2021 PHC - Population Data](Contents/Practicals/data/population.xlsx)
+
 ## Column 2
 
 ### Solutions to Practicals
-After the weekly deadline, the solution to the practical will be uploaded here.
+After the weekly deadline, the solution to the practical will be uploaded here. (This will be after the following lecture.)
 
-<!-- - [Solution Practical 1](Contents/Practicals/Solution_Practical_1.html){target="_blank"} -->
+<!-- - [Solution Practical 1](Contents/Practicals/Assignment-Week-One-Solutions.html){target="_blank"} -->
 
 # Assessment
 
