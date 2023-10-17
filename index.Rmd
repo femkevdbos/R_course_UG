@@ -117,7 +117,8 @@ Here you can find all the lecture slides. Please note that the first page of the
 - [Lecture 3 - Data Wrangling](Contents/Lectures/Week 3/Lecture_week_3.html){target="_blank"}
 - [Lecture 4 - Data Visualization (pt.1)](Contents/Lectures/Week 4/Lecture_week_4.html){target="_blank"}
 - [Lecture 5 - Data Visualization (pt.2)](Contents/Lectures/Week 5/Lecture_week_5.html){target="_blank"}
-
+- [Lecture 6 - Introduction into Modelling in R](Contents/Lectures/Week 6/Lecture_week_6.html){target="_blank"}
+- [Lecture 7 - More on Data Modelling](Contents/Lectures/Week 7/Lecture_week_7.html){target="_blank"}
 
 ## Column 2
 

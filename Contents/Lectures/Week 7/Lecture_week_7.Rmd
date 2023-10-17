@@ -29,8 +29,8 @@ library(moderndive)
 ## Outline of Lecture 7
 - Categorical Variable Linear Regression
 - Multiple Regression
-- Logit
-
+- Logit Model
+- Bootstrapping
 
 ## Steps of Data Analysis
 <center>
@@ -112,25 +112,257 @@ lifeExp_by_continent
 ```
 
 ## Linear Regression
-```{r}
+```{r, warning=FALSE, message=FALSE}
 lifeExp_model <- lm(lifeExp ~ continent, data = gapminder2007)
 summary(lifeExp_model)
 ```
 
 ## Regression Table
-```{r}
+```{r, warning=FALSE, message=FALSE}
 get_regression_table(lifeExp_model)
 ```
 
 ## Fitted Values and Residuals
-```{r}
+```{r, warning=FALSE, message=FALSE}
 regression_points <- get_regression_points(lifeExp_model, ID = "country")
 head(regression_points, 5)
 ```
 
 # Multiple Regression
 
+## Use the US Arrests data
+```{r, warning=FALSE, message=FALSE}
+# Load the USArrests dataset
+data(USArrests)
+
+# View the first few rows of the dataset to understand its structure
+head(USArrests)
+```
+
+## Fit a Multiple Regression Model
+```{r, warning=FALSE, message=FALSE}
+# Fit a multiple regression model with "Murder" as the dependent variable
+# and other variables as predictors
+murder_model <- lm(Murder ~ Assault + UrbanPop + Rape, data = USArrests)
+
+# Print the summary of the regression model
+summary(murder_model)
+```
+
+## Test for Multicollinearity - Correlation Matrix
+```{r}
+# Create a correlation matrix
+cor(USArrests)
+
+# Interpret the results:
+# Values close to 1 or -1 suggest high correlation
+```
+
+## Test for Multicollinearity - Scatterplots
+```{r}
+# Create scatterplots
+# You can choose which pairs of variables you want to plot
+plot(USArrests$Rape, USArrests$Assault, 
+     xlab = "Rape", ylab = "Assault",
+     main = "Scatterplot of Rape vs. Assault")
+```
+
+## Test for Multicollinearity - VIF
+```{r, warning=F, error=F, message=F}
+library(car)
+
+# Calculate VIF for the model
+vif(murder_model)
+
+# Interpret the results:
+# High VIF values suggest potential multicollinearity.
+```
+
+# Interaction Terms
+
+## Multiple Regression with Interaction Terms
+```{r}
+# Fit a multiple regression model with the Diet and Time interaction
+chickweight_model <- lm(weight ~ Time * Diet, data = ChickWeight)
+```
+
+## Multiple Regression with Interaction Terms
+```{r}
+# Summary of the model
+summary(chickweight_model)
+```
+
 # Logit
 
+## Introduction to the Logit Model
+- Binary dependent variable
+- Use the logistic function to estimate $P(Y = 1)$
+- $p(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + \ldots + \beta_pX_p)}}$
+- Log-odds ratio: $\log\left(\frac{p(Y = 1)}{1 - p(Y = 1)}\right) = \beta_0 + \beta_1X_1 + \beta_2X_2 + \ldots + \beta_pX_p$
+- Hence $exp(\beta_j)$ is the change in the odds of the event happening for a one-unit increase in $X_j$
+
+Example:
+- 50/50 chance: odds = 1
+- 80/20 chance: odds = 0.8/0.2 = 4
+    - 4 times more chance of yes than no
+    - The odds of passing is 4 (to 1)
+    
+## Introduction to the Logit Model
+Example:
+$$
+\log\left(\frac{p(\text{Pass} = 1)}{1-p(\text{Pass} = 1)}\right) = \beta_0 + \beta_1 \cdot \text{Hours_Studied} + \epsilon
+$$
+
+- Odds ratio: the ratio of two odds
+- With the logit model we calculate how X variables affect the odds ratio
+$$
+\text{Odds Ratio} = \frac{\text{Odds of passing with 3 hrs of study}}{\text{Odds of passing with 2 hrs of study}} = \frac{0.6/0.4}{0.5/0.5} = \frac{1.5}{1} = 1.5
+$$
+
+- If $exp(\beta_1) = 1.5$, then for one hour increase in study time, the <strong>odds</strong> of passing the exam increase by 50%.
+- This does NOT mean the chance of passing increases by 50%, as that only increased from 50% to 60%!
+
+## Diabetes Data
+```{r, warning=F, message=F}
+# Install and load the "MASS" package (if not already installed)
+# install.packages("MASS")
+library(MASS)
+
+# Load the Pima Indians Diabetes dataset
+data(Pima.te)
+
+# Inspect the data
+glimpse(Pima.te)
+```
+
+## Logit Model in R
+```{r, warning=F, message=F}
+# Fit a logistic regression model (could also use probit)
+diabetes_model <- glm(type ~ glu + age + bmi, data = Pima.tr, 
+                      family = binomial(link = "logit"))
+
+# Summary of the model
+summary(diabetes_model)
+```
+
+# Boostrapping
+
+## Assumptions in Regression Analysis
+- When using `lm()` R assumes that the assumptions for a linear regression model hold
+- What if they don't hold?
+  - Has been discussed in the last lecture, different solutions
+- Normally distributed errors = essential for statistical inference
+- More popular now = non-parametric methods 
+- Non-parametric methods = no assumptions on distribution of error
+- Very good to include as a robustness check!
+  - Checks whether results are robust to the assumptions on the error term
+
+## Introduction into Bootstrapping
+- A resampling technique to estimate the variability of regression coefficients
+- Assesses the robustness of your regression model
+- A very popular and good robustness check
+- If we had a random resampled collection of your datapoints,:
+  - Would your coefficients still be significant?
+- Resampling from the data to estimate the regression coefficients multiple times.
+- Central assumption for bootstrapping = The original sample accurately represents the actual population
+
+## Back to the US Arrests data
+```{r}
+# Fit a linear multiple regression model
+murder_model <- lm(Murder ~ Assault + UrbanPop + Rape, data = USArrests)
+
+# Summary of the lm model
+summary(murder_model)
+```
+
+## Initialize before Boostrapping
+```{r}
+# Set seed for reproducibility
+set.seed(2023)
+
+# Number of bootstraps
+n_bootstraps <- 1000
+
+# Initialize storage for bootstrapped coefficients
+bootstrapped_coefs <- data.frame("Intercept" = rep(0, n_bootstraps),
+                                 "Assault" = rep(0, n_bootstraps), 
+                                 "UrbanPop" = rep(0, n_bootstraps),
+                                 "Rape" = rep(0, n_bootstraps))
+
+```
+
+## Perform Boostrapping
+```{r}
+# Perform bootstrapping
+for (i in 1:n_bootstraps) {
+  # Resample the dataset
+  resampled_data <- USArrests[sample(nrow(USArrests), replace = TRUE), ]
+  
+  # Fit a regression model to the resampled data
+  resampled_model <- lm(Murder ~ Assault + UrbanPop + Rape, 
+                        data = resampled_data)
+  
+  # Store the coefficients
+  bootstrapped_coefs[i, ] <- coef(resampled_model)
+}
+```
+
+## Visualize Boostrapping
+```{r}
+# Visualize Bootstrapped Coefficients
+# Create a density plot for Temperature coefficient
+density_plot_assault <- density(bootstrapped_coefs[, 2])
+plot(density_plot_assault, main = "Bootstrapped Coefficient for Assault")
+
+```
+
+## Confidence Intervals
+```{r}
+# Confidence Intervals
+confidence_intervals <- t(sapply(1:4, function(j){
+  quantile(bootstrapped_coefs[, j], c(0.025, 0.975))
+}))
+colnames(confidence_intervals) <- c("Lower 2.5%", "Upper 97.5%")
+rownames(confidence_intervals) <- colnames(bootstrapped_coefs)
+
+# Print Confidence Intervals
+confidence_intervals
+```
+
+## Assessing Significance with Bootstrapping
+
+- We've performed bootstrapping to estimate the variability of regression coefficients.
+- But how can we use this information to assess the significance of our results?
+- Bootstrapping allows us to generate a distribution of coefficients.
+- We can compare our original regression coefficients to this distribution to assess significance.
+
+## Assessing Significance
+
+1. Calculate the confidence intervals for each coefficient using bootstrapped data.
+2. If the confidence interval of a coefficient includes zero, it suggests that the coefficient is not statistically significant.
+3. If the interval does not include zero, it suggests significance.
+
+## Example: Murder Rate and Predictors
+```{r}
+# Lm model confidence intervals
+get_regression_table(murder_model)
+
+# Bootstrap confidence intervals
+confidence_intervals
+```
+
+# End of the Course Material
+
+## Overview
+| Week  | Topic                               | 
+|:------------|:------------------------------------|
+| *Week 1* | Introduction to R |
+| *Week 2*  | Foundations of R |
+| *Week 3*  | Data Wrangling |
+| *Week 4*  | Data Visualization (pt.1)|
+| *Week 5* | Data Visualization (pt.2)|
+| *Week 6* |  Introduction into Data Modelling in R |
+| *Week 7* |  More on Data Modelling |
+| *Extra* |  Time for rescheduling/recap/presentations |
 
 # End of Lecture 7

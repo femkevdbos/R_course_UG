@@ -214,7 +214,8 @@ slide:not(.current) .plotly.html-widget{
 <ul>
 <li>Categorical Variable Linear Regression</li>
 <li>Multiple Regression</li>
-<li>Logit</li>
+<li>Logit Model</li>
+<li>Bootstrapping</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Steps of Data Analysis</h2></hgroup><article  id="steps-of-data-analysis" class="smaller ">
@@ -379,7 +380,415 @@ head(regression_points, 5)</pre>
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Multiple Regression</h2></hgroup><article  id="multiple-regression" class="smaller ">
 
+</article></slide><slide class=""><hgroup><h2>Use the US Arrests data</h2></hgroup><article  id="use-the-us-arrests-data" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Load the USArrests dataset
+data(USArrests)
+
+# View the first few rows of the dataset to understand its structure
+head(USArrests)</pre>
+
+<pre >##            Murder Assault UrbanPop Rape
+## Alabama      13.2     236       58 21.2
+## Alaska       10.0     263       48 44.5
+## Arizona       8.1     294       80 31.0
+## Arkansas      8.8     190       50 19.5
+## California    9.0     276       91 40.6
+## Colorado      7.9     204       78 38.7</pre>
+
+</article></slide><slide class=""><hgroup><h2>Fit a Multiple Regression Model</h2></hgroup><article  id="fit-a-multiple-regression-model" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Fit a multiple regression model with &quot;Murder&quot; as the dependent variable
+# and other variables as predictors
+murder_model &lt;- lm(Murder ~ Assault + UrbanPop + Rape, data = USArrests)
+
+# Print the summary of the regression model
+summary(murder_model)</pre>
+
+<pre >## 
+## Call:
+## lm(formula = Murder ~ Assault + UrbanPop + Rape, data = USArrests)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.3990 -1.9127 -0.3444  1.2557  7.4279 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  3.276639   1.737997   1.885   0.0657 .  
+## Assault      0.039777   0.005912   6.729 2.33e-08 ***
+## UrbanPop    -0.054694   0.027880  -1.962   0.0559 .  
+## Rape         0.061399   0.055740   1.102   0.2764    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.574 on 46 degrees of freedom
+## Multiple R-squared:  0.6721, Adjusted R-squared:  0.6507 
+## F-statistic: 31.42 on 3 and 46 DF,  p-value: 3.322e-11</pre>
+
+</article></slide><slide class=""><hgroup><h2>Test for Multicollinearity - Correlation Matrix</h2></hgroup><article  id="test-for-multicollinearity---correlation-matrix" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Create a correlation matrix
+cor(USArrests)</pre>
+
+<pre >##              Murder   Assault   UrbanPop      Rape
+## Murder   1.00000000 0.8018733 0.06957262 0.5635788
+## Assault  0.80187331 1.0000000 0.25887170 0.6652412
+## UrbanPop 0.06957262 0.2588717 1.00000000 0.4113412
+## Rape     0.56357883 0.6652412 0.41134124 1.0000000</pre>
+
+<pre class = 'prettyprint lang-r'># Interpret the results:
+# Values close to 1 or -1 suggest high correlation</pre>
+
+</article></slide><slide class=""><hgroup><h2>Test for Multicollinearity - Scatterplots</h2></hgroup><article  id="test-for-multicollinearity---scatterplots" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Create scatterplots
+# You can choose which pairs of variables you want to plot
+plot(USArrests$Rape, USArrests$Assault, 
+     xlab = &quot;Rape&quot;, ylab = &quot;Assault&quot;,
+     main = &quot;Scatterplot of Rape vs. Assault&quot;)</pre>
+
+<p><img src="Lecture_week_7_files/figure-html/unnamed-chunk-16-1.png" width="720" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Test for Multicollinearity - VIF</h2></hgroup><article  id="test-for-multicollinearity---vif" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>library(car)
+
+# Calculate VIF for the model
+vif(murder_model)</pre>
+
+<pre >##  Assault UrbanPop     Rape 
+## 1.794715 1.204229 2.015462</pre>
+
+<pre class = 'prettyprint lang-r'># Interpret the results:
+# High VIF values suggest potential multicollinearity.</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Interaction Terms</h2></hgroup><article  id="interaction-terms" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Multiple Regression with Interaction Terms</h2></hgroup><article  id="multiple-regression-with-interaction-terms" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Fit a multiple regression model with the Diet and Time interaction
+chickweight_model &lt;- lm(weight ~ Time * Diet, data = ChickWeight)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Multiple Regression with Interaction Terms</h2></hgroup><article  id="multiple-regression-with-interaction-terms-1" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Summary of the model
+summary(chickweight_model)</pre>
+
+<pre >## 
+## Call:
+## lm(formula = weight ~ Time * Diet, data = ChickWeight)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -135.425  -13.757   -1.311   11.069  130.391 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  30.9310     4.2468   7.283 1.09e-12 ***
+## Time          6.8418     0.3408  20.076  &lt; 2e-16 ***
+## Diet2        -2.2974     7.2672  -0.316  0.75202    
+## Diet3       -12.6807     7.2672  -1.745  0.08154 .  
+## Diet4        -0.1389     7.2865  -0.019  0.98480    
+## Time:Diet2    1.7673     0.5717   3.092  0.00209 ** 
+## Time:Diet3    4.5811     0.5717   8.014 6.33e-15 ***
+## Time:Diet4    2.8726     0.5781   4.969 8.92e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 34.07 on 570 degrees of freedom
+## Multiple R-squared:  0.773,  Adjusted R-squared:  0.7702 
+## F-statistic: 277.3 on 7 and 570 DF,  p-value: &lt; 2.2e-16</pre>
+
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Logit</h2></hgroup><article  id="logit" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Introduction to the Logit Model</h2></hgroup><article  id="introduction-to-the-logit-model" class="smaller ">
+
+<ul>
+<li>Binary dependent variable</li>
+<li>Use the logistic function to estimate \(P(Y = 1)\)</li>
+<li>\(p(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + \ldots + \beta_pX_p)}}\)</li>
+<li>Log-odds ratio: \(\log\left(\frac{p(Y = 1)}{1 - p(Y = 1)}\right) = \beta_0 + \beta_1X_1 + \beta_2X_2 + \ldots + \beta_pX_p\)</li>
+<li>Hence \(exp(\beta_j)\) is the change in the odds of the event happening for a one-unit increase in \(X_j\)</li>
+</ul>
+
+<p>Example: - 50/50 chance: odds = 1 - 80/20 chance: odds = 0.8/0.2 = 4 - 4 times more chance of yes than no - The odds of passing is 4 (to 1)</p>
+
+</article></slide><slide class=""><hgroup><h2>Introduction to the Logit Model</h2></hgroup><article  id="introduction-to-the-logit-model-1" class="smaller ">
+
+<p>Example: \[
+\log\left(\frac{p(\text{Pass} = 1)}{1-p(\text{Pass} = 1)}\right) = \beta_0 + \beta_1 \cdot \text{Hours_Studied} + \epsilon
+\]</p>
+
+<ul>
+<li><p>Odds ratio: the ratio of two odds</p></li>
+<li><p>With the logit model we calculate how X variables affect the odds ratio \[
+\text{Odds Ratio} = \frac{\text{Odds of passing with 3 hrs of study}}{\text{Odds of passing with 2 hrs of study}} = \frac{0.6/0.4}{0.5/0.5} = \frac{1.5}{1} = 1.5
+\]</p></li>
+<li><p>If \(exp(\beta_1) = 1.5\), then for one hour increase in study time, the <strong>odds</strong> of passing the exam increase by 50%.</p></li>
+<li><p>This does NOT mean the chance of passing increases by 50%, as that only increased from 50% to 60%!</p></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Diabetes Data</h2></hgroup><article  id="diabetes-data" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Install and load the &quot;MASS&quot; package (if not already installed)
+# install.packages(&quot;MASS&quot;)
+library(MASS)
+
+# Load the Pima Indians Diabetes dataset
+data(Pima.te)
+
+# Inspect the data
+glimpse(Pima.te)</pre>
+
+<pre >## Rows: 332
+## Columns: 8
+## $ npreg &lt;int&gt; 6, 1, 1, 3, 2, 5, 0, 1, 3, 9, 1, 5, 3, 10, 4, 9, 2, 4, 3, 7, 9, …
+## $ glu   &lt;int&gt; 148, 85, 89, 78, 197, 166, 118, 103, 126, 119, 97, 109, 88, 122,…
+## $ bp    &lt;int&gt; 72, 66, 66, 50, 70, 72, 84, 30, 88, 80, 66, 75, 58, 78, 60, 76, …
+## $ skin  &lt;int&gt; 35, 29, 23, 32, 45, 19, 47, 38, 41, 35, 15, 26, 11, 31, 33, 37, …
+## $ bmi   &lt;dbl&gt; 33.6, 26.6, 28.1, 31.0, 30.5, 25.8, 45.8, 43.3, 39.3, 29.0, 23.2…
+## $ ped   &lt;dbl&gt; 0.627, 0.351, 0.167, 0.248, 0.158, 0.587, 0.551, 0.183, 0.704, 0…
+## $ age   &lt;int&gt; 50, 31, 21, 26, 53, 51, 31, 33, 27, 29, 22, 60, 22, 45, 33, 46, …
+## $ type  &lt;fct&gt; Yes, No, No, Yes, Yes, Yes, Yes, No, No, Yes, No, No, No, No, No…</pre>
+
+</article></slide><slide class=""><hgroup><h2>Logit Model in R</h2></hgroup><article  id="logit-model-in-r" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Fit a logistic regression model (could also use probit)
+diabetes_model &lt;- glm(type ~ glu + age + bmi, data = Pima.tr, 
+                      family = binomial(link = &quot;logit&quot;))
+
+# Summary of the model
+summary(diabetes_model)</pre>
+
+<pre >## 
+## Call:
+## glm(formula = type ~ glu + age + bmi, family = binomial(link = &quot;logit&quot;), 
+##     data = Pima.tr)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.2356  -0.6974  -0.3967   0.6956   2.3878  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -9.405120   1.477177  -6.367 1.93e-10 ***
+## glu          0.030850   0.006448   4.784 1.72e-06 ***
+## age          0.052569   0.016970   3.098  0.00195 ** 
+## bmi          0.091871   0.032242   2.849  0.00438 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 256.41  on 199  degrees of freedom
+## Residual deviance: 188.39  on 196  degrees of freedom
+## AIC: 196.39
+## 
+## Number of Fisher Scoring iterations: 5</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Boostrapping</h2></hgroup><article  id="boostrapping" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Assumptions in Regression Analysis</h2></hgroup><article  id="assumptions-in-regression-analysis" class="smaller ">
+
+<ul>
+<li>When using <code>lm()</code> R assumes that the assumptions for a linear regression model hold</li>
+<li>What if they don’t hold?
+
+<ul>
+<li>Has been discussed in the last lecture, different solutions</li>
+</ul></li>
+<li>Normally distributed errors = essential for statistical inference</li>
+<li>More popular now = non-parametric methods</li>
+<li>Non-parametric methods = no assumptions on distribution of error</li>
+<li>Very good to include as a robustness check!
+
+<ul>
+<li>Checks whether results are robust to the assumptions on the error term</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Introduction into Bootstrapping</h2></hgroup><article  id="introduction-into-bootstrapping" class="smaller ">
+
+<ul>
+<li>A resampling technique to estimate the variability of regression coefficients</li>
+<li>Assesses the robustness of your regression model</li>
+<li>A very popular and good robustness check</li>
+<li>If we had a random resampled collection of your datapoints,:
+
+<ul>
+<li>Would your coefficients still be significant?</li>
+</ul></li>
+<li>Resampling from the data to estimate the regression coefficients multiple times.</li>
+<li>Central assumption for bootstrapping = The original sample accurately represents the actual population</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Back to the US Arrests data</h2></hgroup><article  id="back-to-the-us-arrests-data" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Fit a linear multiple regression model
+murder_model &lt;- lm(Murder ~ Assault + UrbanPop + Rape, data = USArrests)
+
+# Summary of the lm model
+summary(murder_model)</pre>
+
+<pre >## 
+## Call:
+## lm(formula = Murder ~ Assault + UrbanPop + Rape, data = USArrests)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.3990 -1.9127 -0.3444  1.2557  7.4279 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  3.276639   1.737997   1.885   0.0657 .  
+## Assault      0.039777   0.005912   6.729 2.33e-08 ***
+## UrbanPop    -0.054694   0.027880  -1.962   0.0559 .  
+## Rape         0.061399   0.055740   1.102   0.2764    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.574 on 46 degrees of freedom
+## Multiple R-squared:  0.6721, Adjusted R-squared:  0.6507 
+## F-statistic: 31.42 on 3 and 46 DF,  p-value: 3.322e-11</pre>
+
+</article></slide><slide class=""><hgroup><h2>Initialize before Boostrapping</h2></hgroup><article  id="initialize-before-boostrapping" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Set seed for reproducibility
+set.seed(2023)
+
+# Number of bootstraps
+n_bootstraps &lt;- 1000
+
+# Initialize storage for bootstrapped coefficients
+bootstrapped_coefs &lt;- data.frame(&quot;Intercept&quot; = rep(0, n_bootstraps),
+                                 &quot;Assault&quot; = rep(0, n_bootstraps), 
+                                 &quot;UrbanPop&quot; = rep(0, n_bootstraps),
+                                 &quot;Rape&quot; = rep(0, n_bootstraps))</pre>
+
+</article></slide><slide class=""><hgroup><h2>Perform Boostrapping</h2></hgroup><article  id="perform-boostrapping" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Perform bootstrapping
+for (i in 1:n_bootstraps) {
+  # Resample the dataset
+  resampled_data &lt;- USArrests[sample(nrow(USArrests), replace = TRUE), ]
+  
+  # Fit a regression model to the resampled data
+  resampled_model &lt;- lm(Murder ~ Assault + UrbanPop + Rape, 
+                        data = resampled_data)
+  
+  # Store the coefficients
+  bootstrapped_coefs[i, ] &lt;- coef(resampled_model)
+}</pre>
+
+</article></slide><slide class=""><hgroup><h2>Visualize Boostrapping</h2></hgroup><article  id="visualize-boostrapping" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Visualize Bootstrapped Coefficients
+# Create a density plot for Temperature coefficient
+density_plot_assault &lt;- density(bootstrapped_coefs[, 2])
+plot(density_plot_assault, main = &quot;Bootstrapped Coefficient for Assault&quot;)</pre>
+
+<p><img src="Lecture_week_7_files/figure-html/unnamed-chunk-25-1.png" width="720" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Confidence Intervals</h2></hgroup><article  id="confidence-intervals" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Confidence Intervals
+confidence_intervals &lt;- t(sapply(1:4, function(j){
+  quantile(bootstrapped_coefs[, j], c(0.025, 0.975))
+}))
+colnames(confidence_intervals) &lt;- c(&quot;Lower 2.5%&quot;, &quot;Upper 97.5%&quot;)
+rownames(confidence_intervals) &lt;- colnames(bootstrapped_coefs)
+
+# Print Confidence Intervals
+confidence_intervals</pre>
+
+<pre >##            Lower 2.5%  Upper 97.5%
+## Intercept  0.33911949 6.5271506965
+## Assault    0.02817434 0.0547426312
+## UrbanPop  -0.11341254 0.0002378989
+## Rape      -0.05135256 0.2010056714</pre>
+
+</article></slide><slide class=""><hgroup><h2>Assessing Significance with Bootstrapping</h2></hgroup><article  id="assessing-significance-with-bootstrapping" class="smaller ">
+
+<ul>
+<li>We’ve performed bootstrapping to estimate the variability of regression coefficients.</li>
+<li>But how can we use this information to assess the significance of our results?</li>
+<li>Bootstrapping allows us to generate a distribution of coefficients.</li>
+<li>We can compare our original regression coefficients to this distribution to assess significance.</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Assessing Significance</h2></hgroup><article  id="assessing-significance" class="smaller ">
+
+<ol>
+<li>Calculate the confidence intervals for each coefficient using bootstrapped data.</li>
+<li>If the confidence interval of a coefficient includes zero, it suggests that the coefficient is not statistically significant.</li>
+<li>If the interval does not include zero, it suggests significance.</li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>Example: Murder Rate and Predictors</h2></hgroup><article  id="example-murder-rate-and-predictors" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Lm model confidence intervals
+get_regression_table(murder_model)</pre>
+
+<pre >## # A tibble: 4 × 7
+##   term      estimate std_error statistic p_value lower_ci upper_ci
+##   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 intercept    3.28      1.74       1.88   0.066   -0.222    6.78 
+## 2 Assault      0.04      0.006      6.73   0        0.028    0.052
+## 3 UrbanPop    -0.055     0.028     -1.96   0.056   -0.111    0.001
+## 4 Rape         0.061     0.056      1.10   0.276   -0.051    0.174</pre>
+
+<pre class = 'prettyprint lang-r'># Bootstrap confidence intervals
+confidence_intervals</pre>
+
+<pre >##            Lower 2.5%  Upper 97.5%
+## Intercept  0.33911949 6.5271506965
+## Assault    0.02817434 0.0547426312
+## UrbanPop  -0.11341254 0.0002378989
+## Rape      -0.05135256 0.2010056714</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>End of the Course Material</h2></hgroup><article  id="end-of-the-course-material" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Overview</h2></hgroup><article  id="overview" class="smaller ">
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">Week</th>
+<th align="left">Topic</th>
+</tr>
+<tr class="odd">
+<td align="left"><em>Week 1</em></td>
+<td align="left">Introduction to R</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Week 2</em></td>
+<td align="left">Foundations of R</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>Week 3</em></td>
+<td align="left">Data Wrangling</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Week 4</em></td>
+<td align="left">Data Visualization (pt.1)</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>Week 5</em></td>
+<td align="left">Data Visualization (pt.2)</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Week 6</em></td>
+<td align="left">Introduction into Data Modelling in R</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>Week 7</em></td>
+<td align="left">More on Data Modelling</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Extra</em></td>
+<td align="left">Time for rescheduling/recap/presentations</td>
+</tr>
+</table>
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>End of Lecture 7</h2></hgroup><article  id="end-of-lecture-7" class="smaller "></article></slide>
 
