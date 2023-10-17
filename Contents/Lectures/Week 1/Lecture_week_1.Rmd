@@ -58,6 +58,11 @@ Main goals:
 - Skill to analyse data
 - Critical thinking: what story does the data tell?
 
+## Steps of Data Analysis
+<center>
+<img src="figures/programming_steps.png" alt="HTML5 Icon" width = 95%>
+</center>
+
 ## What are we NOT going to learn?
 - **Everything** you need to know about R
 - Many different packages
@@ -68,7 +73,6 @@ Main goals:
 - More advanced data science techniques
 
 This course is an introduction to R: focused on teaching you how to **analyse data in R** and teaching critical thinking to **tell a story** with data.
-
 
 ## Overview of the course
 - Weekly combination of lecture and practical
@@ -86,7 +90,7 @@ This course is an introduction to R: focused on teaching you how to **analyse da
 - Presentations: in the two weeks after the Christmas break
 - Final assessment (Deadline = 2 February)
 
-## Course schedule (1)
+## Course Schedule
 | Week  | Topic                               | 
 |:------------|:------------------------------------|
 | *Week 1* | Introduction to R |
@@ -94,9 +98,8 @@ This course is an introduction to R: focused on teaching you how to **analyse da
 | *Week 3*  | Data Wrangling |
 | *Week 4*  | Data Visualization (pt.1)|
 | *Week 5* | Data Visualization (pt.2)|
-| *Week 6*  | Guest Lecture: GSS Data Science Team |
-| *Week 7* |  Introduction to Data Modelling in R |
-| *Week 8* |  More on Data Modelling |
+| *Week 6* |  Introduction into Data Modelling in R |
+| *Week 7* |  More on Data Modelling |
 | *Extra* |  Time for rescheduling/recap/presentations |
 
 ## Assessment - Overview

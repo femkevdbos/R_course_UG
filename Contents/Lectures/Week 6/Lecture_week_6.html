@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lecture 6</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Lecture 6',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'Lecture_week_6_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Introduction into Data Modelling in R' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <script src="Lecture_week_6_files/header-attrs-2.20/header-attrs.js"></script>
+  <link href="Lecture_week_6_files/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="Lecture_week_6_files/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="Lecture_week_6_files/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="Lecture_week_6_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="Lecture_week_6_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="Lecture_week_6_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="Lecture_week_6_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="Lecture_week_6_files/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="Lecture_week_6_files/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="Lecture_week_6_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    summary {
+      display: list-item;
+    }
+
+    details > summary > p:only-child {
+      display: inline;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.2s ease-in-out;
+      -moz-transition: all 0.2s ease-in-out;
+      -o-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.2s;
+      -moz-transition: opacity 0.6s ease-in 0.2s;
+      -o-transition: opacity 0.6s ease-in 0.2s;
+      transition: opacity 0.6s ease-in 0.2s;
+      opacity: 0;
+    }
+/* https://github.com/ropensci/plotly/pull/524#issuecomment-468142578 */
+slide:not(.current) .plotly.html-widget{
+  display: block;
+}
+
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+            pre > code.sourceCode { white-space: pre; position: relative; }
+            pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+            pre > code.sourceCode > span:empty { height: 1.2em; }
+            .sourceCode { overflow: visible; }
+            code.sourceCode > span { color: inherit; text-decoration: inherit; }
+            div.sourceCode { margin: 1em 0; }
+            pre.sourceCode { margin: 0; }
+            @media screen {
+            div.sourceCode { overflow: auto; }
+            }
+            @media print {
+            pre > code.sourceCode { white-space: pre-wrap; }
+            pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+            }
+            pre.numberSource code
+              { counter-reset: source-line 0; }
+            pre.numberSource code > span
+              { position: relative; left: -4em; counter-increment: source-line; }
+            pre.numberSource code > span > a:first-child::before
+              { content: counter(source-line);
+                position: relative; left: -1em; text-align: right; vertical-align: baseline;
+                border: none; display: inline-block;
+                -webkit-touch-callout: none; -webkit-user-select: none;
+                -khtml-user-select: none; -moz-user-select: none;
+                -ms-user-select: none; user-select: none;
+                padding: 0 4px; width: 4em;
+                color: #aaaaaa;
+              }
+            pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+            div.sourceCode
+              {   }
+            @media screen {
+            pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+            }
+            code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+            code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+            code span.at { color: #7d9029; } /* Attribute */
+            code span.bn { color: #40a070; } /* BaseN */
+            code span.bu { color: #008000; } /* BuiltIn */
+            code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+            code span.ch { color: #4070a0; } /* Char */
+            code span.cn { color: #880000; } /* Constant */
+            code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+            code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+            code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+            code span.dt { color: #902000; } /* DataType */
+            code span.dv { color: #40a070; } /* DecVal */
+            code span.er { color: #ff0000; font-weight: bold; } /* Error */
+            code span.ex { } /* Extension */
+            code span.fl { color: #40a070; } /* Float */
+            code span.fu { color: #06287e; } /* Function */
+            code span.im { color: #008000; font-weight: bold; } /* Import */
+            code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+            code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+            code span.op { color: #666666; } /* Operator */
+            code span.ot { color: #007020; } /* Other */
+            code span.pp { color: #bc7a00; } /* Preprocessor */
+            code span.sc { color: #4070a0; } /* SpecialChar */
+            code span.ss { color: #bb6688; } /* SpecialString */
+            code span.st { color: #4070a0; } /* String */
+            code span.va { color: #19177c; } /* Variable */
+            code span.vs { color: #4070a0; } /* VerbatimString */
+            code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+        
+    slides > slide:not(.nobackground):before {
+      font-size: 12pt;
+      content: "";
+      position: absolute;
+      bottom: 20px;
+      left: 60px;
+      background: url(Lecture_week_6_files/logo.png) no-repeat 0 50%;
+      -webkit-background-size: 30px 30px;
+      -moz-background-size: 30px 30px;
+      -o-background-size: 30px 30px;
+      background-size: 30px 30px;
+      padding-left: 40px;
+      height: 30px;
+      line-height: 1.9;
+    }
+  </style>
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides>
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="Lecture_week_6_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">17-10-2023</p>
+          </hgroup>
+  </slide>
+
+<slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Recap of Last Week</h2></hgroup><article  id="recap-of-last-week" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Recap Lecture 5</h2></hgroup><article  id="recap-lecture-5" class="smaller ">
+
+<ul>
+<li>Recap: How to tell a story with data
+
+<ul>
+<li>5 steps of data analysis</li>
+</ul></li>
+<li>More Advanced Figures</li>
+<li>Tips</li>
+<li>Examples</li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Outline of Lecture 6</h2></hgroup><article  id="outline-of-lecture-6" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Outline of Lecture 6</h2></hgroup><article  id="outline-of-lecture-6-1" class="smaller ">
+
+<ul>
+<li>Introduction into Data Modelling</li>
+<li>Simple Linear Regression</li>
+<li>Assumptions of Linear Regressions</li>
+<li>Correlation versus Causation</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Steps of Data Analysis</h2></hgroup><article  id="steps-of-data-analysis" class="smaller ">
+
+<center>
+
+<img src="figures/programming_steps.png" alt="HTML5 Icon" width = 95%>
+
+</center>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Introduction into Data Modelling</h2></hgroup><article  id="introduction-into-data-modelling" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>What is data modelling?</h2></hgroup><article  id="what-is-data-modelling" class="smaller ">
+
+<ul>
+<li>Estimating the relationship between:
+
+<ul>
+<li>Outcome variable <code>y</code>, the dependent variable</li>
+<li>Explanatory variable <code>x</code>, the independent variable / covariate</li>
+</ul></li>
+<li>Main purposes of data modelling
+
+<ul>
+<li>Modelling for explanation (significance, causality)</li>
+<li>Modelling for prediction</li>
+</ul></li>
+<li>Focus in this class is on modelling for explanation
+
+<ul>
+<li>Refer to <code>x</code> as explanatory variables</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Simple Linear Regression</h2></hgroup><article  id="simple-linear-regression" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>What is a Simple Linear Regression?</h2></hgroup><article  id="what-is-a-simple-linear-regression" class="smaller ">
+
+<ul>
+<li>Investigating the linear relation between two variables</li>
+<li>Linear: assumes a linear relation between x and y, if x increases by 1, y increases by the slope (\(\beta\))</li>
+<li>Simple: only one independent variable</li>
+</ul>
+
+<p>\[
+Y = \alpha + \beta X + \epsilon
+\]</p>
+
+</article></slide><slide class=""><hgroup><h2>Assumptions of Linear Regressions (LINEE)</h2></hgroup><article  id="assumptions-of-linear-regressions-linee" class="smaller ">
+
+<ol>
+<li><strong>L</strong>inearity of relationship between variables
+
+<ul>
+<li>A linear relationship between X and Y</li>
+</ul></li>
+<li><strong>I</strong>ndependence of residuals
+
+<ul>
+<li>There should be no correlation between residuals</li>
+</ul></li>
+<li><strong>N</strong>ormality of residuals
+
+<ul>
+<li>The residuals should be normally distributed</li>
+</ul></li>
+<li><strong>E</strong>quality of variance of residuals (homoskedasticity)
+
+<ul>
+<li>Variance of the residuals is the same for each value of X</li>
+</ul></li>
+<li><strong>E</strong>xogeneity (zero conditional mean)
+
+<ul>
+<li>The residuals should be independent of X (independent variables)</li>
+</ul></li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>Assumptions of Linear Regressions - Multiple Regression</h2></hgroup><article  id="assumptions-of-linear-regressions---multiple-regression" class="smaller ">
+
+<p>For multiple independent variables:</p>
+
+<p>Extra Assumption: No perfect multicollinearity</p>
+
+<ul>
+<li>There should not be perfect correlation between different X variables</li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>SLR in R</h2></hgroup><article  id="slr-in-r" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Galton Dataset</h2></hgroup><article  id="galton-dataset" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>library(HistData)</pre>
+
+<pre >## Warning: package &#39;HistData&#39; was built under R version 4.2.3</pre>
+
+<pre class = 'prettyprint lang-r'># Load the dataset
+data(Galton)
+
+# Explore the dataset
+head(Galton)</pre>
+
+<pre >##   parent child
+## 1   70.5  61.7
+## 2   68.5  61.7
+## 3   65.5  61.7
+## 4   64.5  61.7
+## 5   64.0  61.7
+## 6   67.5  62.2</pre>
+
+</article></slide><slide class=""><hgroup><h2>Exploratory Data Analysis</h2></hgroup><article  id="exploratory-data-analysis" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Summary of the data
+summary(Galton)</pre>
+
+<pre >##      parent          child      
+##  Min.   :64.00   Min.   :61.70  
+##  1st Qu.:67.50   1st Qu.:66.20  
+##  Median :68.50   Median :68.20  
+##  Mean   :68.31   Mean   :68.09  
+##  3rd Qu.:69.50   3rd Qu.:70.20  
+##  Max.   :73.00   Max.   :73.70</pre>
+
+<pre class = 'prettyprint lang-r'># Correlation
+cor(Galton$child, Galton$parent)</pre>
+
+<pre >## [1] 0.4587624</pre>
+
+</article></slide><slide class=""><hgroup><h2>Visualize (scatterplot)</h2></hgroup><article  id="visualize-scatterplot" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Plot the data
+scatterplot &lt;- ggplot(Galton, 
+                      aes(x = parent, y = child)) +
+  geom_point(alpha = 0.05) + 
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  theme_bw() + 
+  labs(x = &quot;Parent length&quot;, y = &quot;Child length&quot;) </pre>
+
+</article></slide><slide class=""><hgroup><h2>Visualize (scatterplot)</h2></hgroup><article  id="visualize-scatterplot-1" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Plot the data
+scatterplot </pre>
+
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-4-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Simple Linear Regression</h2></hgroup><article  id="simple-linear-regression-1" class="smaller ">
+
+<p>\[
+ChildLength = \alpha + \beta ParentLength + \epsilon
+\]</p>
+
+<pre class = 'prettyprint lang-r'># Fit a simple linear regression model
+model_outcome &lt;- lm(child ~ parent, data = Galton)
+
+# View the summary of the regression model
+summary(model_outcome)</pre>
+
+<pre >## 
+## Call:
+## lm(formula = child ~ parent, data = Galton)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.8050 -1.3661  0.0487  1.6339  5.9264 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 23.94153    2.81088   8.517   &lt;2e-16 ***
+## parent       0.64629    0.04114  15.711   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.239 on 926 degrees of freedom
+## Multiple R-squared:  0.2105, Adjusted R-squared:  0.2096 
+## F-statistic: 246.8 on 1 and 926 DF,  p-value: &lt; 2.2e-16</pre>
+
+</article></slide><slide class=""><hgroup><h2>Moderndrive Package</h2></hgroup><article  id="moderndrive-package" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Install package and load library
+# install.packages(moderndive)
+library(moderndive)
+
+# Get regression table
+get_regression_table(model_outcome)</pre>
+
+<pre >## # A tibble: 2 × 7
+##   term      estimate std_error statistic p_value lower_ci upper_ci
+##   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 intercept   23.9       2.81       8.52       0   18.4     29.5  
+## 2 parent       0.646     0.041     15.7        0    0.566    0.727</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Testing the LINE Assumptions</h2></hgroup><article  id="testing-the-line-assumptions" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Assumptions of Linear Regressions (LINEE)</h2></hgroup><article  id="assumptions-of-linear-regressions-linee-1" class="smaller ">
+
+<ol>
+<li><strong>L</strong>inearity of relationship between variables
+
+<ul>
+<li>A linear relationship between X and Y</li>
+</ul></li>
+<li><strong>I</strong>ndependence of residuals
+
+<ul>
+<li>There should be no correlation between residuals</li>
+</ul></li>
+<li><strong>N</strong>ormality of residuals
+
+<ul>
+<li>The residuals should be normally distributed</li>
+</ul></li>
+<li><strong>E</strong>quality of variance of residuals (homoskedasticity)
+
+<ul>
+<li>Variance of the residuals is the same for each value of X</li>
+</ul></li>
+<li><strong>E</strong>xogeneity (zero conditional mean)
+
+<ul>
+<li>The residuals should be independent of X (independent variables)</li>
+</ul></li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>Assumptions of Linear Regressions - Multiple Regression</h2></hgroup><article  id="assumptions-of-linear-regressions---multiple-regression-1" class="smaller ">
+
+<p>For multiple independent variables:</p>
+
+<p>Extra Assumption: No perfect multicollinearity</p>
+
+<ul>
+<li>There should not be perfect correlation between different X variables</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>L: Linearity between X and Y</h2></hgroup><article  id="l-linearity-between-x-and-y" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Scatterplot of X and Y
+scatterplot_x_y &lt;- ggplot(Galton,
+                          aes(x = parent, y = child)) +
+  geom_point(alpha = 0.05) +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  theme_bw() +
+  labs(x = &quot;Parent length&quot;, y = &quot;Child length&quot;) </pre>
+
+</article></slide><slide class=""><hgroup><h2>L: Linearity between X and Y</h2></hgroup><article  id="l-linearity-between-x-and-y-1" class="smaller ">
+
+<p>Scatterplot of X and Y</p>
+
+<pre class = 'prettyprint lang-r'># Plot the data
+scatterplot_x_y </pre>
+
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-8-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>L: Linearity between X and Y</h2></hgroup><article  id="l-linearity-between-x-and-y-2" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Plot the data observed values versus predicted values (ideally a horizontal line)
+plot(model_outcome$fitted.values, model_outcome$model$child)</pre>
+
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-9-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>L: Linearity between X and Y - Violated</h2></hgroup><article  id="l-linearity-between-x-and-y---violated" class="smaller ">
+
+<p>If it is violated:</p>
+
+<ol>
+<li>Apply a nonlinear transformation to make the relation linear
+
+<ul>
+<li>Taking the log for example</li>
+</ul></li>
+<li>Add another independent variable, such as \(X^2\)</li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>I: Independence of Residuals</h2></hgroup><article  id="i-independence-of-residuals" class="smaller ">
+
+<ul>
+<li>Mainly a problem in time series data:
+
+<ul>
+<li>No correlation between consecutive errors in time series data</li>
+</ul></li>
+<li>Check with a residuals time series plot</li>
+<li>Durbin-Watson test</li>
+<li>Ljung-Box test</li>
+<li>You can assume this holds for non time series data usually</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>I: Independence of Residuals</h2></hgroup><article  id="i-independence-of-residuals-1" class="smaller ">
+
+<p>In time series data you would plot residuals against time.</p>
+
+<p>Tests for autocorrelation (dependence between residuals): be careful with non-timeseries data!!</p>
+
+<pre class = 'prettyprint lang-r'># Load the lmtest package
+library(lmtest)
+
+# Perform the Durbin Watson test - p &lt; 0.05 suggests autocorrelation
+dwtest(model_outcome)</pre>
+
+<pre >## 
+##  Durbin-Watson test
+## 
+## data:  model_outcome
+## DW = 0.045702, p-value &lt; 2.2e-16
+## alternative hypothesis: true autocorrelation is greater than 0</pre>
+
+</article></slide><slide class=""><hgroup><h2>I: Independence of Residuals</h2></hgroup><article  id="i-independence-of-residuals-2" class="smaller ">
+
+<p>In time series data you would plot residuals against time.</p>
+
+<p>Tests for autocorrelation (dependence between residuals): be careful with non-timeseries data!!</p>
+
+<pre class = 'prettyprint lang-r'># Perform the Ljung-Box test on the residuals - p &lt; 0.05 suggests serial correlation
+Box.test(model_outcome$residuals, type = &quot;Ljung-Box&quot;)</pre>
+
+<pre >## 
+##  Box-Ljung test
+## 
+## data:  model_outcome$residuals
+## X-squared = 872.48, df = 1, p-value &lt; 2.2e-16</pre>
+
+</article></slide><slide class=""><hgroup><h2>I: Independence of Residuals - Violated</h2></hgroup><article  id="i-independence-of-residuals---violated" class="smaller ">
+
+<p>If it is violated:</p>
+
+<ol>
+<li>Add lags of the dependent variable</li>
+<li>Add lags of independent variables</li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>N: Normality of Residuals</h2></hgroup><article  id="n-normality-of-residuals" class="smaller ">
+
+<p>Draw a histogram of residuals:</p>
+
+<pre class = 'prettyprint lang-r'># Save residuals in a dataframe
+residuals_df &lt;- data.frame(Residuals = model_outcome$residuals)
+
+# Plot a histogram of the residuals
+hist_residuals &lt;- ggplot(residuals_df,
+                         aes(x = Residuals)) +
+  geom_histogram() +
+  theme_grey() </pre>
+
+</article></slide><slide class=""><hgroup><h2>N: Normality of Residuals</h2></hgroup><article  id="n-normality-of-residuals-1" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Plot a histogram of the residuals
+hist_residuals </pre>
+
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-13-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>N: Normality of Residuals</h2></hgroup><article  id="n-normality-of-residuals-2" class="smaller ">
+
+<p>QQ-Plot of standardized residuals:</p>
+
+<pre class = 'prettyprint lang-r'># Standardize the residuals
+residuals_vect &lt;- model_outcome$residuals
+std_residuals &lt;- residuals_vect / sd(residuals_vect)
+
+# Create QQ-plot data
+qq_data_std &lt;- data.frame(Theoretical_Quantiles = 
+                            qnorm(ppoints(length(std_residuals))),
+                      Sample_Quantiles = 
+                        quantile(std_residuals, 
+                                 probs = ppoints(length(std_residuals))))
+                      
+# Plot a QQ-plot of the residuals
+qq_plot &lt;- ggplot(qq_data_std, 
+                  aes(x = Theoretical_Quantiles, y = Sample_Quantiles)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;, linetype = &quot;dashed&quot;) +
+  labs(title = &quot;QQ Plot of Standardized Residuals&quot;, 
+       x = &quot;Theoretical Quantiles&quot;, y = &quot;Sample Quantiles&quot;)</pre>
+
+</article></slide><slide class=""><hgroup><h2>N: Normality of Residuals</h2></hgroup><article  id="n-normality-of-residuals-3" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Plot a histogram of the residuals
+qq_plot </pre>
+
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-15-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>N: Normality of Residuals</h2></hgroup><article  id="n-normality-of-residuals-4" class="smaller ">
+
+<p>Shapiro-Wilk test: if p &lt; 0.05, reject assumption of normality</p>
+
+<pre class = 'prettyprint lang-r'>shapiro.test(model_outcome$residuals)</pre>
+
+<pre >## 
+##  Shapiro-Wilk normality test
+## 
+## data:  model_outcome$residuals
+## W = 0.99275, p-value = 0.0001697</pre>
+
+</article></slide><slide class=""><hgroup><h2>N: Normality of Residuals - Violated</h2></hgroup><article  id="n-normality-of-residuals---violated" class="smaller ">
+
+<p>If it is violated:</p>
+
+<ol>
+<li>Transorm the data</li>
+<li>Check for outliers</li>
+<li>Use bootstrapping for statistical inference</li>
+</ol>
+
+<ul>
+<li>Next lecture!</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals (Homoskedasticity)</h2></hgroup><article  id="e-equality-of-variance-of-residuals-homoskedasticity" class="smaller ">
+
+<p>Plot residuals against X (conditional heteroskedasticity)</p>
+
+<pre class = 'prettyprint lang-r'># Get regression points
+regression_points &lt;- get_regression_points(model_outcome)
+
+# Plot residuals against X
+residuals_x &lt;- ggplot(regression_points, 
+                      aes(x = parent, y = residual)) +
+  geom_point() +
+  labs(x = &quot;Parent Height&quot;, y = &quot;Residual&quot;) +
+  geom_hline(yintercept = 0, col = &quot;blue&quot;, size = 1)</pre>
+
+</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals</h2></hgroup><article  id="e-equality-of-variance-of-residuals" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Plot residuals against X
+residuals_x </pre>
+
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-18-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals (Homoskedasticity)</h2></hgroup><article  id="e-equality-of-variance-of-residuals-homoskedasticity-1" class="smaller ">
+
+<p>Plot residuals against predicted values (global heteroskedasticity)</p>
+
+<pre class = 'prettyprint lang-r'># Get regression points
+regression_points &lt;- get_regression_points(model_outcome)
+
+# Plot residuals against predicted Y
+residuals_predicted_y &lt;- ggplot(regression_points, 
+                                aes(x = child_hat, y = residual)) +
+  geom_point() +
+  labs(x = &quot;Child Height - Predicted Value&quot;, y = &quot;Residual&quot;) +
+  geom_hline(yintercept = 0, col = &quot;blue&quot;, size = 1)</pre>
+
+</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals</h2></hgroup><article  id="e-equality-of-variance-of-residuals-1" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Plot residuals against predicted Y
+residuals_predicted_y </pre>
+
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-20-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals (Homoskedasticity)</h2></hgroup><article  id="e-equality-of-variance-of-residuals-homoskedasticity-2" class="smaller ">
+
+<p>Breusch-Pagan Test for heteroskedasticity (p &lt; 0.05 indicates heteroskedasticity)</p>
+
+<pre class = 'prettyprint lang-r'># Breusch-Pagan Test
+bptest(model_outcome)</pre>
+
+<pre >## 
+##  studentized Breusch-Pagan test
+## 
+## data:  model_outcome
+## BP = 0.34256, df = 1, p-value = 0.5584</pre>
+
+</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals (Homoskedasticity) - Violated</h2></hgroup><article  id="e-equality-of-variance-of-residuals-homoskedasticity---violated" class="smaller ">
+
+<p>If it is violated:</p>
+
+<ol>
+<li>Transform the dependent variable (e.g. take log)</li>
+<li>Redefine the dependent variable (use a rate instead of value)</li>
+<li>Use heteroskedasticity-robust standard errors</li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals (Homoskedasticity) - Violated</h2></hgroup><article  id="e-equality-of-variance-of-residuals-homoskedasticity---violated-1" class="smaller ">
+
+<p>Heteroskedastic-robust standard errors in R</p>
+
+<pre class = 'prettyprint lang-r'>library(sandwich)
+library(lmtest)
+
+# Fit the linear regression model with heteroskedasticity-robust standard errors
+model &lt;- lm(child ~ parent, data = Galton)
+robust_model &lt;- coeftest(model, vcov = vcovHC(model, type = &quot;HC3&quot;))
+
+# View the results
+robust_model</pre>
+
+<pre >## 
+## t test of coefficients:
+## 
+##              Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept) 23.941530   2.744432  8.7237 &lt; 2.2e-16 ***
+## parent       0.646291   0.040191 16.0806 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</pre>
+
+</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals (Homoskedasticity) - Violated</h2></hgroup><article  id="e-equality-of-variance-of-residuals-homoskedasticity---violated-2" class="smaller ">
+
+<p>Heteroskedastic-robust standard errors in R</p>
+
+<pre class = 'prettyprint lang-r'># Load the stargazer package (if not already loaded)
+library(stargazer)
+
+# Fit the linear regression model with robust standard errors
+model &lt;- lm(child ~ parent, data = Galton)
+robust_model &lt;- coeftest(model, vcov = vcovHC(model, type = &quot;HC0&quot;))</pre>
+
+</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals</h2></hgroup><article  id="e-equality-of-variance-of-residuals-2" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Print the regression table including both models
+stargazer(model, robust_model, type = &quot;text&quot;,
+          title = &quot;Regression Models Comparison&quot;,
+          dep.var.caption = &quot;Child Height&quot;,
+          star.cutoffs = c(0.05, 0.01, 0.001))</pre>
+
+<pre >## 
+## Regression Models Comparison
+## ========================================================
+##                                 Child Height            
+##                     ------------------------------------
+##                              child                      
+##                               OLS            coefficient
+##                                                 test    
+##                               (1)                (2)    
+## --------------------------------------------------------
+## parent                      0.646***          0.646***  
+##                             (0.041)            (0.040)  
+##                                                         
+## Constant                   23.942***          23.942*** 
+##                             (2.811)            (2.733)  
+##                                                         
+## --------------------------------------------------------
+## Observations                  928                       
+## R2                           0.210                      
+## Adjusted R2                  0.210                      
+## Residual Std. Error     2.239 (df = 926)                
+## F Statistic         246.839*** (df = 1; 926)            
+## ========================================================
+## Note:                      *p&lt;0.05; **p&lt;0.01; ***p&lt;0.001</pre>
+
+</article></slide><slide class=""><hgroup><h2>Exogeneity</h2></hgroup><article  id="exogeneity" class="smaller ">
+
+<ul>
+<li><p>The residuals should be independent of X (independent variables)</p></li>
+<li><p>Also assume zero conditional mean: mean of residuals is (approximately) zero</p></li>
+<li><p>Plot residuals against independent variables</p></li>
+<li><p>Think about how data is collected! = theoretical justification</p></li>
+<li><p>Omitted variable bias</p></li>
+<li><p>Measurement errors</p></li>
+<li><p>Reverse causality</p></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Exogeneity - Violated</h2></hgroup><article  id="exogeneity---violated" class="smaller ">
+
+<ul>
+<li>Add additional explanatory variables</li>
+<li>Use instrumental variables
+
+<ul>
+<li>Correlated with the endogenous independent variable</li>
+<li>But not with the error term</li>
+</ul></li>
+<li>Hausman test
+
+<ul>
+<li>Compares a model with possible endogenous variable to one without</li>
+</ul></li>
+<li>F-test of joint significance of independent variabels in explaining the error term</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Multicollinearity</h2></hgroup><article  id="multicollinearity" class="smaller ">
+
+<ul>
+<li>Important for multiple regression</li>
+<li>Calculate the correlation matrix</li>
+<li>VIF measure of correlation (VIF greater than 5 or 10 = significant multicollinearity)</li>
+<li>Solution could be to remove an explanatory variable</li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Built in R checks for assumptions</h2></hgroup><article  id="built-in-r-checks-for-assumptions" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>R checks for model assumptions</h2></hgroup><article  id="r-checks-for-model-assumptions" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Change the panel layout to 2 x 2 (to look at all 4 plots at once)
+par(mfrow = c(2, 2))
+
+# Use plot() function to create diagnostic plots
+plot(model_outcome)</pre>
+
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-25-1.png" width="720" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>R Plots Explained</h2></hgroup><article  id="r-plots-explained" class="smaller ">
+
+<ol>
+<li>Residuals vs Fitted: checks for linearity
+
+<ul>
+<li>Linearity if residuals are spread equally around zero</li>
+</ul></li>
+<li>Normal Q-Q: checks for normality of residuals
+
+<ul>
+<li>If residuals follow the 45-degree line, assumption is met</li>
+</ul></li>
+<li>Scale-Location: checks for homoskedasticity
+
+<ul>
+<li>If residuals are spread randomly and the red line is horizontal, assumption is met</li>
+</ul></li>
+<li>Residuals vs Leverage: checks for outliers</li>
+</ol>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Correlation versus Causation</h2></hgroup><article  id="correlation-versus-causation" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Correlation versus Causation</h2></hgroup><article  id="correlation-versus-causation-1" class="smaller ">
+
+<p>What is the difference between correlation and causation?</p>
+
+<p>What have we analysed this lecture? Correlation or causation?</p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>End of Lecture 6</h2></hgroup><article  id="end-of-lecture-6" class="smaller "></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

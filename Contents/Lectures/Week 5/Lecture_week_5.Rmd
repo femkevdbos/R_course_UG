@@ -30,10 +30,14 @@ library(tidyverse)
 ## Outline of Lecture 5
 - Recap: How to tell a story with data
   - 5 steps of data analysis
-- Introduction into visualization
-- Visualization in R
-  - Base R graphs
-  - `ggplot`
+- More Advanced Figures 
+- Tips
+- Examples
+
+## Steps of Data Analysis
+<center>
+<img src="figures/programming_steps.png" alt="HTML5 Icon" width = 95%>
+</center>
 
 # Recap: Telling a Story with Data
 ## 5 Steps of Data Analysis
@@ -87,7 +91,8 @@ library(tidyverse)
 - Ask others (classmates, teaching assistant, lecturers)
 - Be creative and search for the graph you want to create
 
-## Themes
+# Themes 
+## R Themes
 |Themes | Description |
 |-----|----------------------- |
 |theme_bw() | white background with grid lines|
@@ -123,16 +128,17 @@ plot_with_theme <- ggplot(ChickWeight,
 plot_with_theme
 ```
 
-# Many more options!
+# Tips
 
 ## Practice makes perfect
+- Always make a sketch on a piece of paper before programming
 - Do not be afraid to try new things in R
 - Try to make figures and see what does and does not work
 - It is a step by step learning process
 - Focus on practicing and being critical
-- Work together and learn from eachother
+- Work together and learn from each other
 
-# Some examples
+# Examples
 
 ## New data
 Source: https://r4ds.hadley.nz/data-visualize
@@ -218,7 +224,10 @@ example_graph_5 <- ggplot(penguins,
 example_graph_5
 ```
 
-## Rest of todays session
+# Todays Session
+
+## Todays session
+- Make sketches of graphs you want to make
 - Try to make figures using your data
 - Try to use other data to make figures
 - Find new types of graphs to make

@@ -1,0 +1,136 @@
+---
+title: 'Lecture 7'
+author: "More on Data Modelling"
+date: "17-10-2023"
+output:
+  ioslides_presentation:
+    logo: "figures/UoG_logo_small.png"
+    transition: faster
+    smaller: true
+    widescreen: no
+    self_contained: false
+  beamer_presentation: default
+---
+```{r setup, include = FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(moderndive)
+```
+
+# Recap of Last Week
+
+## Recap Lecture 6
+- Introduction into Data Modelling
+- Simple Linear Regression
+- Assumptions of Linear Regressions
+- Correlation versus Causation
+
+# Outline of Lecture 7
+
+## Outline of Lecture 7
+- Categorical Variable Linear Regression
+- Multiple Regression
+- Logit
+
+
+## Steps of Data Analysis
+<center>
+<img src="figures/programming_steps.png" alt="HTML5 Icon" width = 95%>
+</center>
+
+# Categorical Variable Linear Regression
+
+## Load Data
+```{r, warning=FALSE, message=FALSE}
+# Load data
+library(gapminder)
+
+# Explore data
+glimpse(gapminder)
+```
+
+## Select 2007
+```{r, warning=FALSE, message=FALSE}
+gapminder2007 <- gapminder %>%
+  filter(year == 2007) %>%
+  select(country, lifeExp, continent, gdpPercap)
+
+head(gapminder2007, 5)
+```
+
+## Visualize - Histogram
+```{r, warning=FALSE, message=FALSE}
+histogram <- ggplot(gapminder2007, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5, color = "white") +
+  labs(x = "Life expectancy", y = "Number of countries",
+       title = "Histogram of distribution of worldwide life expectancies") +
+  theme_classic()
+```
+
+## Visualize - Histogram
+```{r, warning=FALSE, message=FALSE}
+histogram 
+```
+
+## Histogram per Continent
+```{r}
+histogram_continent <- ggplot(gapminder2007, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5, color = "white") +
+  labs(x = "Life expectancy", 
+       y = "Number of countries",
+       title = "Histogram of distribution of worldwide life expectancies") +
+  theme_light() +
+  facet_wrap(~ continent, nrow = 2) 
+```
+
+## Histogram per Continent
+```{r}
+histogram_continent
+```
+
+## Boxplot per Continent
+```{r}
+boxplot_continent <- ggplot(gapminder2007, aes(x = continent, y = lifeExp)) +
+  geom_boxplot() +
+  labs(x = "Continent", y = "Life expectancy",
+       title = "Life expectancy by continent") +
+  theme_minimal()
+```
+
+## Boxplot per Continent
+```{r}
+boxplot_continent 
+```
+
+## Exploratory Data Analysis
+```{r}
+lifeExp_by_continent <- gapminder2007 %>%
+  group_by(continent) %>%
+  summarize(median = median(lifeExp), 
+            mean = mean(lifeExp))
+
+lifeExp_by_continent
+```
+
+## Linear Regression
+```{r}
+lifeExp_model <- lm(lifeExp ~ continent, data = gapminder2007)
+summary(lifeExp_model)
+```
+
+## Regression Table
+```{r}
+get_regression_table(lifeExp_model)
+```
+
+## Fitted Values and Residuals
+```{r}
+regression_points <- get_regression_points(lifeExp_model, ID = "country")
+head(regression_points, 5)
+```
+
+# Multiple Regression
+
+# Logit
+
+
+# End of Lecture 7

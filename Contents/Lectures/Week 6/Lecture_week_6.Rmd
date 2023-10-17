@@ -1,0 +1,433 @@
+---
+title: 'Lecture 6'
+author: "Introduction into Data Modelling in R"
+date: "17-10-2023"
+output:
+  ioslides_presentation:
+    logo: "figures/UoG_logo_small.png"
+    transition: faster
+    smaller: true
+    widescreen: no
+    self_contained: false
+  beamer_presentation: default
+---
+```{r setup, include = FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(moderndive)
+```
+
+# Recap of Last Week
+
+## Recap Lecture 5
+- Recap: How to tell a story with data
+  - 5 steps of data analysis
+- More Advanced Figures 
+- Tips
+- Examples
+
+# Outline of Lecture 6
+
+## Outline of Lecture 6
+- Introduction into Data Modelling
+- Simple Linear Regression
+- Assumptions of Linear Regressions
+- Correlation versus Causation
+
+## Steps of Data Analysis
+<center>
+<img src="figures/programming_steps.png" alt="HTML5 Icon" width = 95%>
+</center>
+
+# Introduction into Data Modelling
+
+## What is data modelling?
+- Estimating the relationship between:
+  - Outcome variable `y`, the dependent variable
+  - Explanatory variable `x`, the independent variable / covariate
+- Main purposes of data modelling
+  - Modelling for explanation (significance, causality)
+  - Modelling for prediction
+- Focus in this class is on modelling for explanation
+  - Refer to `x` as explanatory variables
+  
+# Simple Linear Regression
+
+## What is a Simple Linear Regression?
+- Investigating the linear relation between two variables
+- Linear: assumes a linear relation between x and y, if x increases by 1, y increases by the slope ($\beta$)
+- Simple: only one independent variable
+
+$$
+Y = \alpha + \beta X + \epsilon
+$$
+
+## Assumptions of Linear Regressions (LINEE)
+
+1. <strong>L</strong>inearity of relationship between variables
+    - A linear relationship between X and Y
+2. <strong>I</strong>ndependence of residuals
+    - There should be no correlation between residuals
+3. <strong>N</strong>ormality of residuals
+    - The residuals should be normally distributed
+4. <strong>E</strong>quality of variance of residuals (homoskedasticity)
+    - Variance of the residuals is the same for each value of X
+5. <strong>E</strong>xogeneity (zero conditional mean)
+    - The residuals should be independent of X (independent variables)
+
+## Assumptions of Linear Regressions - Multiple Regression
+For multiple independent variables:
+
+Extra Assumption:  No perfect multicollinearity
+
+  - There should not be perfect correlation between different X variables
+
+# SLR in R
+## Galton Dataset
+```{r}
+library(HistData)
+
+# Load the dataset
+data(Galton)
+
+# Explore the dataset
+head(Galton)
+```
+
+## Exploratory Data Analysis
+```{r}
+# Summary of the data
+summary(Galton)
+
+# Correlation
+cor(Galton$child, Galton$parent)
+```
+
+## Visualize (scatterplot)
+```{r}
+# Plot the data
+scatterplot <- ggplot(Galton, 
+                      aes(x = parent, y = child)) +
+  geom_point(alpha = 0.05) + 
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() + 
+  labs(x = "Parent length", y = "Child length") 
+```
+
+## Visualize (scatterplot)
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+# Plot the data
+scatterplot 
+```
+
+## Simple Linear Regression
+$$
+ChildLength = \alpha + \beta ParentLength + \epsilon
+$$
+```{r}
+# Fit a simple linear regression model
+model_outcome <- lm(child ~ parent, data = Galton)
+
+# View the summary of the regression model
+summary(model_outcome)
+```
+
+## Moderndrive Package
+```{r}
+# Install package and load library
+# install.packages(moderndive)
+library(moderndive)
+
+# Get regression table
+get_regression_table(model_outcome)
+```
+
+# Testing the LINE Assumptions
+## Assumptions of Linear Regressions (LINEE)
+
+1. <strong>L</strong>inearity of relationship between variables
+    - A linear relationship between X and Y
+2. <strong>I</strong>ndependence of residuals
+    - There should be no correlation between residuals
+3. <strong>N</strong>ormality of residuals
+    - The residuals should be normally distributed
+4. <strong>E</strong>quality of variance of residuals (homoskedasticity)
+    - Variance of the residuals is the same for each value of X
+5. <strong>E</strong>xogeneity (zero conditional mean)
+    - The residuals should be independent of X (independent variables)
+
+## Assumptions of Linear Regressions - Multiple Regression
+For multiple independent variables:
+
+Extra Assumption:  No perfect multicollinearity
+
+  - There should not be perfect correlation between different X variables
+  
+## L: Linearity between X and Y 
+```{r}
+# Scatterplot of X and Y
+scatterplot_x_y <- ggplot(Galton,
+                          aes(x = parent, y = child)) +
+  geom_point(alpha = 0.05) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  labs(x = "Parent length", y = "Child length") 
+```
+
+## L: Linearity between X and Y 
+Scatterplot of X and Y
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+# Plot the data
+scatterplot_x_y 
+```
+
+## L: Linearity between X and Y
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+# Plot the data observed values versus predicted values (ideally a horizontal line)
+plot(model_outcome$fitted.values, model_outcome$model$child)
+```
+
+## L: Linearity between X and Y - Violated
+If it is violated:
+
+1. Apply a nonlinear transformation to make the relation linear
+    - Taking the log for example
+2. Add another independent variable, such as $X^2$
+
+## I: Independence of Residuals
+- Mainly a problem in time series data:
+  - No correlation between consecutive errors in time series data
+- Check with a residuals time series plot
+- Durbin-Watson test
+- Ljung-Box test
+- You can assume this holds for non time series data usually
+
+## I: Independence of Residuals
+In time series data you would plot residuals against time.
+
+Tests for autocorrelation (dependence between residuals): be careful with non-timeseries data!!
+```{r, message = F}
+# Load the lmtest package
+library(lmtest)
+
+# Perform the Durbin Watson test - p < 0.05 suggests autocorrelation
+dwtest(model_outcome)
+```
+
+## I: Independence of Residuals
+In time series data you would plot residuals against time.
+
+Tests for autocorrelation (dependence between residuals): be careful with non-timeseries data!!
+```{r}
+# Perform the Ljung-Box test on the residuals - p < 0.05 suggests serial correlation
+Box.test(model_outcome$residuals, type = "Ljung-Box")
+```
+
+## I: Independence of Residuals - Violated
+If it is violated:
+
+1. Add lags of the dependent variable
+2. Add lags of independent variables
+
+## N: Normality of Residuals
+Draw a histogram of residuals:
+```{r}
+# Save residuals in a dataframe
+residuals_df <- data.frame(Residuals = model_outcome$residuals)
+
+# Plot a histogram of the residuals
+hist_residuals <- ggplot(residuals_df,
+                         aes(x = Residuals)) +
+  geom_histogram() +
+  theme_grey() 
+```
+
+## N: Normality of Residuals
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+# Plot a histogram of the residuals
+hist_residuals 
+```
+
+## N: Normality of Residuals
+QQ-Plot of standardized residuals:
+```{r}
+# Standardize the residuals
+residuals_vect <- model_outcome$residuals
+std_residuals <- residuals_vect / sd(residuals_vect)
+
+# Create QQ-plot data
+qq_data_std <- data.frame(Theoretical_Quantiles = 
+                            qnorm(ppoints(length(std_residuals))),
+                      Sample_Quantiles = 
+                        quantile(std_residuals, 
+                                 probs = ppoints(length(std_residuals))))
+                      
+# Plot a QQ-plot of the residuals
+qq_plot <- ggplot(qq_data_std, 
+                  aes(x = Theoretical_Quantiles, y = Sample_Quantiles)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+  labs(title = "QQ Plot of Standardized Residuals", 
+       x = "Theoretical Quantiles", y = "Sample Quantiles")
+```
+
+## N: Normality of Residuals
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+# Plot a histogram of the residuals
+qq_plot 
+```
+
+## N: Normality of Residuals
+Shapiro-Wilk test: if p < 0.05, reject assumption of normality
+```{r}
+shapiro.test(model_outcome$residuals)
+```
+
+## N: Normality of Residuals - Violated
+If it is violated:
+
+1. Transorm the data
+2. Check for outliers
+3. Use bootstrapping for statistical inference
+  - Next lecture!
+
+## E: Equality of Variance of Residuals (Homoskedasticity)
+Plot residuals against X (conditional heteroskedasticity)
+```{r, warning=FALSE, message=FALSE}
+# Get regression points
+regression_points <- get_regression_points(model_outcome)
+
+# Plot residuals against X
+residuals_x <- ggplot(regression_points, 
+                      aes(x = parent, y = residual)) +
+  geom_point() +
+  labs(x = "Parent Height", y = "Residual") +
+  geom_hline(yintercept = 0, col = "blue", size = 1)
+```
+
+## E: Equality of Variance of Residuals
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+# Plot residuals against X
+residuals_x 
+```
+
+## E: Equality of Variance of Residuals (Homoskedasticity)
+Plot residuals against predicted values (global heteroskedasticity)
+```{r, warning=FALSE, message=FALSE}
+# Get regression points
+regression_points <- get_regression_points(model_outcome)
+
+# Plot residuals against predicted Y
+residuals_predicted_y <- ggplot(regression_points, 
+                                aes(x = child_hat, y = residual)) +
+  geom_point() +
+  labs(x = "Child Height - Predicted Value", y = "Residual") +
+  geom_hline(yintercept = 0, col = "blue", size = 1)
+```
+
+## E: Equality of Variance of Residuals
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+# Plot residuals against predicted Y
+residuals_predicted_y 
+```
+
+## E: Equality of Variance of Residuals (Homoskedasticity)
+Breusch-Pagan Test for heteroskedasticity (p < 0.05 indicates heteroskedasticity)
+```{r}
+# Breusch-Pagan Test
+bptest(model_outcome)
+```
+
+## E: Equality of Variance of Residuals (Homoskedasticity) - Violated
+If it is violated:
+
+1. Transform the dependent variable (e.g. take log)
+2. Redefine the dependent variable (use a rate instead of value)
+3. Use heteroskedasticity-robust standard errors
+
+## E: Equality of Variance of Residuals (Homoskedasticity) - Violated
+Heteroskedastic-robust standard errors in R
+```{r, warning=FALSE, message=FALSE}
+library(sandwich)
+library(lmtest)
+
+# Fit the linear regression model with heteroskedasticity-robust standard errors
+model <- lm(child ~ parent, data = Galton)
+robust_model <- coeftest(model, vcov = vcovHC(model, type = "HC3"))
+
+# View the results
+robust_model
+```
+
+## E: Equality of Variance of Residuals (Homoskedasticity) - Violated
+Heteroskedastic-robust standard errors in R
+```{r, warning=FALSE, message=FALSE}
+# Load the stargazer package (if not already loaded)
+library(stargazer)
+
+# Fit the linear regression model with robust standard errors
+model <- lm(child ~ parent, data = Galton)
+robust_model <- coeftest(model, vcov = vcovHC(model, type = "HC0"))
+```
+
+## E: Equality of Variance of Residuals
+```{r, warning=FALSE, message=FALSE}
+# Print the regression table including both models
+stargazer(model, robust_model, type = "text",
+          title = "Regression Models Comparison",
+          dep.var.caption = "Child Height",
+          star.cutoffs = c(0.05, 0.01, 0.001))
+```
+
+## Exogeneity
+- The residuals should be independent of X (independent variables)
+- Also assume zero conditional mean: mean of residuals is (approximately) zero
+- Plot residuals against independent variables
+
+- Think about how data is collected! = theoretical justification
+- Omitted variable bias
+- Measurement errors
+- Reverse causality
+
+## Exogeneity - Violated
+- Add additional explanatory variables
+- Use instrumental variables
+  - Correlated with the endogenous independent variable
+  - But not with the error term
+- Hausman test
+  - Compares a model with possible endogenous variable to one without
+- F-test of joint significance of independent variabels in explaining the error term
+
+## Multicollinearity
+- Important for multiple regression
+- Calculate the correlation matrix
+- VIF measure of correlation (VIF greater than 5 or 10 = significant multicollinearity)
+- Solution could be to remove an explanatory variable
+
+# Built in R checks for assumptions
+## R checks for model assumptions
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+# Change the panel layout to 2 x 2 (to look at all 4 plots at once)
+par(mfrow = c(2, 2))
+
+# Use plot() function to create diagnostic plots
+plot(model_outcome)
+```
+
+## R Plots Explained
+1. Residuals vs Fitted: checks for linearity
+    - Linearity if residuals are spread equally around zero
+2. Normal Q-Q: checks for normality of residuals
+    - If residuals follow the 45-degree line, assumption is met
+3. Scale-Location: checks for homoskedasticity
+    - If residuals are spread randomly and the red line is horizontal, assumption is met
+4. Residuals vs Leverage: checks for outliers
+
+# Correlation versus Causation
+
+## Correlation versus Causation
+What is the difference between correlation and causation?
+
+What have we analysed this lecture? Correlation or causation?
+
+
+# End of Lecture 6

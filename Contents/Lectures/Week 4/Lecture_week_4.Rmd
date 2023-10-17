@@ -36,6 +36,11 @@ library(tidyverse)
 - Visualization in R
   - Base R graphs
   - `ggplot2`
+  
+## Steps of Data Analysis
+<center>
+<img src="figures/programming_steps.png" alt="HTML5 Icon" width = 95%>
+</center>
 
 # Story Telling with Data
 

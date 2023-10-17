@@ -41,6 +41,11 @@ library(lubridate)
 - Joining datasets
 - Exporting data
 
+## Steps of Data Analysis
+<center>
+<img src="figures/programming_steps.png" alt="HTML5 Icon" width = 95%>
+</center>
+
 # Foundations of R
 
 ## Basic mathematics
@@ -146,6 +151,31 @@ names <- c("Abena", "Kwame", "Jao", "Kobina", "Effia")
 grades <- c(5, 8, 2, 7, 6, 9)
 f <- list(names, grades)
 f
+```
+
+# Random Numbers
+## Random numbers
+You can generate random numbers in R:
+```{r}
+# Random numbers between 1 and 100
+sample(1:100, size=10, replace=TRUE)
+
+# Set a seed to consistently get the same numbers
+set.seed(123)
+sample(1:100, size=10, replace=TRUE)
+
+# You can also add probabilities
+sample(c("succ", "fail"), 10, replace=T, prob=c(0.9, 0.1))
+```
+
+## Using distributions
+```{r}
+# Uniform distribution between 0 and 10
+runif(10, 0, 10)
+
+# Poisson distribution, lambda = 1
+rpois(n = 10, lambda = 100)
+
 ```
 
 # Subsetting / calling elements

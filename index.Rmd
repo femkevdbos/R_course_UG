@@ -53,19 +53,19 @@ Our main goals are to provide you with a solid understanding of R, equip you wit
 
 ### Course schedule 
 | Week  | Day | Time      | Topic                               | 
-|:------------|:------------|:------------|:------------------------------------|
-| *Week 1* |Friday - October 13 |9:00-12:00 | Introduction to R |
-| *Week 2* |Friday - October 20 |9:00-12:00 | Foundations of R |
-| *Week 3* |Friday - October 27 |9:00-12:00 | Data Wrangling |
-| *Week 4* |Friday - November 3 |9:00-12:00 | Data Visualization (pt.1) |
-| *Week 5* |Friday - November 10 |9:00-12:00 | Data Visualization (pt.2) |
-| *Week 6* |Friday - November 17 |9:00-12:00 | Guest Lecture: GSS Data Science Team |
-| *Week 7* |Friday - November 24 |9:00-12:00 | Introduction to Data Modelling in R |
-| *Week 8* |Friday - December 1 |9:00-12:00 | More on Data Modelling |
+|:----------|:---------------------|:------------|:------------------------------------|
+| *Week 1* |Friday - October 20 |9:00-12:00 | Introduction to R |
+| *Week 2* |Friday - October 27 |9:00-12:00 | Foundations of R |
+| *Week 3* |Friday - November 3 |9:00-12:00 | Data Wrangling |
+| *Week 4* |Friday - November 10 |9:00-12:00 | Data Visualization (pt.1) |
+| *Week 5* |Day TBD |9:00-12:00 | Data Visualization (pt.2) |
+| *Week 6* |Friday - November 24 |9:00-12:00 | Introduction into Data Modelling in R |
+| *Week 7* |Day TBD |9:00-12:00 | More on Data Modelling |
 |  |Friday - December 8 |9:00-12:00 | Time for working on the report / catching up |
 | *Recap* |Friday - December 15 |9:00-12:00 | Recap Lecture + Assistance with Report |
 | |Friday - December 22 |9:00-12:00 | Time for working on the report |
-|  | *Christmas break!*  |    |    |Presentations (pt.1) |
+|  | *Christmas break!*  |    |    | |
+| *Presentations * |Friday - January 12 |9:00-12:00 | Presentations (pt.1) |
 | *Presentations * |Friday - January 19 |9:00-12:00 | Presentations (pt.2) |
 
 
@@ -112,11 +112,11 @@ type `Yes` in the console and press the return key.
 ### Lecture Slides
 Here you can find all the lecture slides. Please note that the first page of the slides shows the date on which the slides were last updated. We adapt the course as we go. To ensure that you work with the latest iteration of the course materials, we advice all course participants to access the materials online.
 
-- [Lecture 1](Contents/Lectures/Week 1/Lecture_week_1.html){target="_blank"}
-- [Lecture 2](Contents/Lectures/Week 2/Lecture_week_2.html){target="_blank"}
-- [Lecture 3](Contents/Lectures/Week 3/Lecture_week_3.html){target="_blank"}
-- [Lecture 4](Contents/Lectures/Week 4/Lecture_week_4.html){target="_blank"}
-- [Lecture 5](Contents/Lectures/Week 5/Lecture_week_5.html){target="_blank"}
+- [Lecture 1 - Introduction to R](Contents/Lectures/Week 1/Lecture_week_1.html){target="_blank"}
+- [Lecture 2 - Foundations of R](Contents/Lectures/Week 2/Lecture_week_2.html){target="_blank"}
+- [Lecture 3 - Data Wrangling](Contents/Lectures/Week 3/Lecture_week_3.html){target="_blank"}
+- [Lecture 4 - Data Visualization (pt.1)](Contents/Lectures/Week 4/Lecture_week_4.html){target="_blank"}
+- [Lecture 5 - Data Visualization (pt.2)](Contents/Lectures/Week 5/Lecture_week_5.html){target="_blank"}
 
 
 ## Column 2
@@ -132,6 +132,7 @@ The following links are useful references that connect to the material:
 - [The Tidyverse Style Guide](https://style.tidyverse.org)
 - [Datacamp Tutorial on Pipes](https://www.datacamp.com/tutorial/pipe-r-tutorial)
 - [The `ggplot2` Reference Package](https://ggplot2.tidyverse.org/reference/)
+- [R Graph Gallery](https://r-graph-gallery.com/index.html)
 
 # Practicals
 
@@ -142,7 +143,7 @@ Here you can find the assignments for the weekly homework assignments. Please no
 
 The deadline for each assignment is before the next lecture!
 
-- [Practical Assignment 1 (Deadline: xxx)](Contents/Practicals/Week 1 Assignment.pdf)
+- [Practical Assignment 1 (Deadline: Thursday )](Contents/Practicals/Week 1 Assignment.pdf)
 
 
 ### Data

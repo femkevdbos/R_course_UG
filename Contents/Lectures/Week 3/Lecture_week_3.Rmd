@@ -41,6 +41,11 @@ library(lubridate)
   - Filter, select, arrange
   - Grouping, summarizing, mutating
 
+## Steps of Data Analysis
+<center>
+<img src="figures/programming_steps.png" alt="HTML5 Icon" width = 95%>
+</center>
+
 # Data Wrangling
 
 ## What is data wrangling?

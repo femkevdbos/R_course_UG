@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lecture 7</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Lecture 7',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'Lecture_week_7_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'More on Data Modelling' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <script src="Lecture_week_7_files/header-attrs-2.20/header-attrs.js"></script>
+  <link href="Lecture_week_7_files/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="Lecture_week_7_files/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="Lecture_week_7_files/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="Lecture_week_7_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="Lecture_week_7_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="Lecture_week_7_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="Lecture_week_7_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="Lecture_week_7_files/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="Lecture_week_7_files/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="Lecture_week_7_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    summary {
+      display: list-item;
+    }
+
+    details > summary > p:only-child {
+      display: inline;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.2s ease-in-out;
+      -moz-transition: all 0.2s ease-in-out;
+      -o-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.2s;
+      -moz-transition: opacity 0.6s ease-in 0.2s;
+      -o-transition: opacity 0.6s ease-in 0.2s;
+      transition: opacity 0.6s ease-in 0.2s;
+      opacity: 0;
+    }
+/* https://github.com/ropensci/plotly/pull/524#issuecomment-468142578 */
+slide:not(.current) .plotly.html-widget{
+  display: block;
+}
+
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+            pre > code.sourceCode { white-space: pre; position: relative; }
+            pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+            pre > code.sourceCode > span:empty { height: 1.2em; }
+            .sourceCode { overflow: visible; }
+            code.sourceCode > span { color: inherit; text-decoration: inherit; }
+            div.sourceCode { margin: 1em 0; }
+            pre.sourceCode { margin: 0; }
+            @media screen {
+            div.sourceCode { overflow: auto; }
+            }
+            @media print {
+            pre > code.sourceCode { white-space: pre-wrap; }
+            pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+            }
+            pre.numberSource code
+              { counter-reset: source-line 0; }
+            pre.numberSource code > span
+              { position: relative; left: -4em; counter-increment: source-line; }
+            pre.numberSource code > span > a:first-child::before
+              { content: counter(source-line);
+                position: relative; left: -1em; text-align: right; vertical-align: baseline;
+                border: none; display: inline-block;
+                -webkit-touch-callout: none; -webkit-user-select: none;
+                -khtml-user-select: none; -moz-user-select: none;
+                -ms-user-select: none; user-select: none;
+                padding: 0 4px; width: 4em;
+                color: #aaaaaa;
+              }
+            pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+            div.sourceCode
+              {   }
+            @media screen {
+            pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+            }
+            code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+            code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+            code span.at { color: #7d9029; } /* Attribute */
+            code span.bn { color: #40a070; } /* BaseN */
+            code span.bu { color: #008000; } /* BuiltIn */
+            code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+            code span.ch { color: #4070a0; } /* Char */
+            code span.cn { color: #880000; } /* Constant */
+            code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+            code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+            code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+            code span.dt { color: #902000; } /* DataType */
+            code span.dv { color: #40a070; } /* DecVal */
+            code span.er { color: #ff0000; font-weight: bold; } /* Error */
+            code span.ex { } /* Extension */
+            code span.fl { color: #40a070; } /* Float */
+            code span.fu { color: #06287e; } /* Function */
+            code span.im { color: #008000; font-weight: bold; } /* Import */
+            code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+            code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+            code span.op { color: #666666; } /* Operator */
+            code span.ot { color: #007020; } /* Other */
+            code span.pp { color: #bc7a00; } /* Preprocessor */
+            code span.sc { color: #4070a0; } /* SpecialChar */
+            code span.ss { color: #bb6688; } /* SpecialString */
+            code span.st { color: #4070a0; } /* String */
+            code span.va { color: #19177c; } /* Variable */
+            code span.vs { color: #4070a0; } /* VerbatimString */
+            code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+        
+    slides > slide:not(.nobackground):before {
+      font-size: 12pt;
+      content: "";
+      position: absolute;
+      bottom: 20px;
+      left: 60px;
+      background: url(Lecture_week_7_files/logo.png) no-repeat 0 50%;
+      -webkit-background-size: 30px 30px;
+      -moz-background-size: 30px 30px;
+      -o-background-size: 30px 30px;
+      background-size: 30px 30px;
+      padding-left: 40px;
+      height: 30px;
+      line-height: 1.9;
+    }
+  </style>
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides>
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="Lecture_week_7_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">17-10-2023</p>
+          </hgroup>
+  </slide>
+
+<slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Recap of Last Week</h2></hgroup><article  id="recap-of-last-week" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Recap Lecture 6</h2></hgroup><article  id="recap-lecture-6" class="smaller ">
+
+<ul>
+<li>Introduction into Data Modelling</li>
+<li>Simple Linear Regression</li>
+<li>Assumptions of Linear Regressions</li>
+<li>Correlation versus Causation</li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Outline of Lecture 7</h2></hgroup><article  id="outline-of-lecture-7" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Outline of Lecture 7</h2></hgroup><article  id="outline-of-lecture-7-1" class="smaller ">
+
+<ul>
+<li>Categorical Variable Linear Regression</li>
+<li>Multiple Regression</li>
+<li>Logit</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Steps of Data Analysis</h2></hgroup><article  id="steps-of-data-analysis" class="smaller ">
+
+<center>
+
+<img src="figures/programming_steps.png" alt="HTML5 Icon" width = 95%>
+
+</center>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Categorical Variable Linear Regression</h2></hgroup><article  id="categorical-variable-linear-regression" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Load Data</h2></hgroup><article  id="load-data" class="smaller ">
+
+<pre class = 'prettyprint lang-r'># Load data
+library(gapminder)
+
+# Explore data
+glimpse(gapminder)</pre>
+
+<pre >## Rows: 1,704
+## Columns: 6
+## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, …
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …</pre>
+
+</article></slide><slide class=""><hgroup><h2>Select 2007</h2></hgroup><article  id="select-2007" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>gapminder2007 &lt;- gapminder %&gt;%
+  filter(year == 2007) %&gt;%
+  select(country, lifeExp, continent, gdpPercap)
+
+head(gapminder2007, 5)</pre>
+
+<pre >## # A tibble: 5 × 4
+##   country     lifeExp continent gdpPercap
+##   &lt;fct&gt;         &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
+## 1 Afghanistan    43.8 Asia           975.
+## 2 Albania        76.4 Europe        5937.
+## 3 Algeria        72.3 Africa        6223.
+## 4 Angola         42.7 Africa        4797.
+## 5 Argentina      75.3 Americas     12779.</pre>
+
+</article></slide><slide class=""><hgroup><h2>Visualize - Histogram</h2></hgroup><article  id="visualize---histogram" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>histogram &lt;- ggplot(gapminder2007, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5, color = &quot;white&quot;) +
+  labs(x = &quot;Life expectancy&quot;, y = &quot;Number of countries&quot;,
+       title = &quot;Histogram of distribution of worldwide life expectancies&quot;) +
+  theme_classic()</pre>
+
+</article></slide><slide class=""><hgroup><h2>Visualize - Histogram</h2></hgroup><article  id="visualize---histogram-1" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>histogram </pre>
+
+<p><img src="Lecture_week_7_files/figure-html/unnamed-chunk-4-1.png" width="720" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Histogram per Continent</h2></hgroup><article  id="histogram-per-continent" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>histogram_continent &lt;- ggplot(gapminder2007, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5, color = &quot;white&quot;) +
+  labs(x = &quot;Life expectancy&quot;, 
+       y = &quot;Number of countries&quot;,
+       title = &quot;Histogram of distribution of worldwide life expectancies&quot;) +
+  theme_light() +
+  facet_wrap(~ continent, nrow = 2) </pre>
+
+</article></slide><slide class=""><hgroup><h2>Histogram per Continent</h2></hgroup><article  id="histogram-per-continent-1" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>histogram_continent</pre>
+
+<p><img src="Lecture_week_7_files/figure-html/unnamed-chunk-6-1.png" width="720" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Boxplot per Continent</h2></hgroup><article  id="boxplot-per-continent" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>boxplot_continent &lt;- ggplot(gapminder2007, aes(x = continent, y = lifeExp)) +
+  geom_boxplot() +
+  labs(x = &quot;Continent&quot;, y = &quot;Life expectancy&quot;,
+       title = &quot;Life expectancy by continent&quot;) +
+  theme_minimal()</pre>
+
+</article></slide><slide class=""><hgroup><h2>Boxplot per Continent</h2></hgroup><article  id="boxplot-per-continent-1" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>boxplot_continent </pre>
+
+<p><img src="Lecture_week_7_files/figure-html/unnamed-chunk-8-1.png" width="720" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Exploratory Data Analysis</h2></hgroup><article  id="exploratory-data-analysis" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>lifeExp_by_continent &lt;- gapminder2007 %&gt;%
+  group_by(continent) %&gt;%
+  summarize(median = median(lifeExp), 
+            mean = mean(lifeExp))
+
+lifeExp_by_continent</pre>
+
+<pre >## # A tibble: 5 × 3
+##   continent median  mean
+##   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt;
+## 1 Africa      52.9  54.8
+## 2 Americas    72.9  73.6
+## 3 Asia        72.4  70.7
+## 4 Europe      78.6  77.6
+## 5 Oceania     80.7  80.7</pre>
+
+</article></slide><slide class=""><hgroup><h2>Linear Regression</h2></hgroup><article  id="linear-regression" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>lifeExp_model &lt;- lm(lifeExp ~ continent, data = gapminder2007)
+summary(lifeExp_model)</pre>
+
+<pre >## 
+## Call:
+## lm(formula = lifeExp ~ continent, data = gapminder2007)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -26.9005  -4.0399   0.2565   3.3840  21.6360 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)         54.806      1.025  53.446  &lt; 2e-16 ***
+## continentAmericas   18.802      1.800  10.448  &lt; 2e-16 ***
+## continentAsia       15.922      1.646   9.675  &lt; 2e-16 ***
+## continentEurope     22.843      1.695  13.474  &lt; 2e-16 ***
+## continentOceania    25.913      5.328   4.863 3.12e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.395 on 137 degrees of freedom
+## Multiple R-squared:  0.6355, Adjusted R-squared:  0.6249 
+## F-statistic: 59.71 on 4 and 137 DF,  p-value: &lt; 2.2e-16</pre>
+
+</article></slide><slide class=""><hgroup><h2>Regression Table</h2></hgroup><article  id="regression-table" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>get_regression_table(lifeExp_model)</pre>
+
+<pre >## # A tibble: 5 × 7
+##   term                estimate std_error statistic p_value lower_ci upper_ci
+##   &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 intercept               54.8      1.02     53.4        0     52.8     56.8
+## 2 continent: Americas     18.8      1.8      10.4        0     15.2     22.4
+## 3 continent: Asia         15.9      1.65      9.68       0     12.7     19.2
+## 4 continent: Europe       22.8      1.70     13.5        0     19.5     26.2
+## 5 continent: Oceania      25.9      5.33      4.86       0     15.4     36.4</pre>
+
+</article></slide><slide class=""><hgroup><h2>Fitted Values and Residuals</h2></hgroup><article  id="fitted-values-and-residuals" class="smaller ">
+
+<pre class = 'prettyprint lang-r'>regression_points &lt;- get_regression_points(lifeExp_model, ID = &quot;country&quot;)
+head(regression_points, 5)</pre>
+
+<pre >## # A tibble: 5 × 5
+##   country     lifeExp continent lifeExp_hat residual
+##   &lt;fct&gt;         &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Afghanistan    43.8 Asia             70.7   -26.9 
+## 2 Albania        76.4 Europe           77.6    -1.23
+## 3 Algeria        72.3 Africa           54.8    17.5 
+## 4 Angola         42.7 Africa           54.8   -12.1 
+## 5 Argentina      75.3 Americas         73.6     1.71</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Multiple Regression</h2></hgroup><article  id="multiple-regression" class="smaller ">
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Logit</h2></hgroup><article  id="logit" class="smaller ">
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>End of Lecture 7</h2></hgroup><article  id="end-of-lecture-7" class="smaller "></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
