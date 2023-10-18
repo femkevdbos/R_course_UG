@@ -333,4 +333,11 @@ We are not going to learn a list of functions that exist, but during the course 
   - Already generates tables
   - First insights into data
     
+# Course Website
+
+## Website
+All course materials can be found on:
+
+<span style="font-size: 2em;">https://femkevdbos.github.io/R_course_UG</span>
+
 # End of Lecture 1

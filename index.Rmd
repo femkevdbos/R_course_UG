@@ -14,7 +14,7 @@ output:
 
 # Intro {.sidebar}
 
-This website covers the materials for the course introducing R to University of Ghana students. It is a one semester course, with a weekly lecture, weekly homework assignments, and a final assignment and presentation.
+This website covers the materials for the course R for Data Analysis for University of Ghana students. It is a one semester course, with a weekly lecture, weekly homework assignments, and a final assignment and presentation.
 
 ---
 
@@ -32,7 +32,7 @@ Joshua Mawutor
 
 ---
 
-Please note that some of the material is adopted from [Steffen Eriksen](https://www.youtube.com/c/SteffensClassroom) (University of Groningen), [Laurent Smeets](https://github.com/Laurent-Smeets-GSS-Account/RGhana) (Ghana Statistical Service), [Gerko Vink](https://github.com/gerkovink/R) (Statistics Denmark), [Stan Koobs](University of Rotterdam), and online resources.
+Please note that some of the material is adopted from [Steffen Eriksen](https://www.youtube.com/c/SteffensClassroom) (University of Groningen), [Laurent Smeets](https://github.com/Laurent-Smeets-GSS-Account/RGhana) (Ghana Statistical Service), [Gerko Vink](https://github.com/gerkovink/R) (Statistics Denmark), [Stan Koobs](https://www.eur.nl/en/people/stan-koobs) (University of Rotterdam), and online resources.
 
 ---
 # Overview
