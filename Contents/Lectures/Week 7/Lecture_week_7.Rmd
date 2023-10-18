@@ -1,7 +1,7 @@
 ---
 title: 'Lecture 7'
 author: "More on Data Modelling"
-date: "17-10-2023"
+date: 
 output:
   ioslides_presentation:
     logo: "figures/UoG_logo_small.png"
@@ -31,6 +31,8 @@ library(moderndive)
 - Multiple Regression
 - Logit Model
 - Bootstrapping
+- More Models
+- Course Overview
 
 ## Steps of Data Analysis
 <center>
@@ -122,6 +124,11 @@ summary(lifeExp_model)
 get_regression_table(lifeExp_model)
 ```
 
+## Interpreting Results
+- Base category
+- Cannot include all categorical variables
+- Ceteris paribus = all other things being equal
+
 ## Fitted Values and Residuals
 ```{r, warning=FALSE, message=FALSE}
 regression_points <- get_regression_points(lifeExp_model, ID = "country")
@@ -148,6 +155,26 @@ murder_model <- lm(Murder ~ Assault + UrbanPop + Rape, data = USArrests)
 # Print the summary of the regression model
 summary(murder_model)
 ```
+
+## Assumptions of Linear Regressions - Multiple Regression
+For multiple independent variables:
+
+Extra Assumption:  No perfect multicollinearity
+
+  - There should not be perfect correlation between different X variables
+  
+## Multicollinearity
+- Important for multiple regression
+- If X and Z are highly correlated -> difficult to distinguish effect of X and Z
+- Calculate the correlation matrix
+    - Values close to -1 or 1 indicate high correlation
+- Variance Inflation Factor (VIF): measure of correlation 
+    - VIF_i = 1 / (1 - R²_i)
+    - R²_i = coefficient of determination for the regression of the variable against all the other independent variables
+    - VIF greater than 5 = significant multicollinearity
+- Solutions:
+  - Remove an explanatory variable
+  - Combine explanatory variables
 
 ## Test for Multicollinearity - Correlation Matrix
 ```{r}
@@ -180,28 +207,36 @@ vif(murder_model)
 
 # Interaction Terms
 
-## Multiple Regression with Interaction Terms
+## Multiple Regression + Interaction Terms
 ```{r}
 # Fit a multiple regression model with the Diet and Time interaction
 chickweight_model <- lm(weight ~ Time * Diet, data = ChickWeight)
 ```
 
-## Multiple Regression with Interaction Terms
+## Multiple Regression + Interaction Terms
 ```{r}
 # Summary of the model
 summary(chickweight_model)
 ```
 
+## Interpreting Results
+- Why is diet 1 not included?
+- What is the effect of time increasing by 1?
+- What is the difference between Diet 1 and 2 at time = 0?
+- What is the difference in the effect of time between Diet 1 and diet 3?
+
 # Logit
 
 ## Introduction to the Logit Model
 - Binary dependent variable
-- Use the logistic function to estimate $P(Y = 1)$
+- Use the logistic function to estimate $P(Y = 1 ∣ X=x)$
+- In the linear regression we estimate $E(Y ∣ X=x)$
 - $p(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + \ldots + \beta_pX_p)}}$
 - Log-odds ratio: $\log\left(\frac{p(Y = 1)}{1 - p(Y = 1)}\right) = \beta_0 + \beta_1X_1 + \beta_2X_2 + \ldots + \beta_pX_p$
 - Hence $exp(\beta_j)$ is the change in the odds of the event happening for a one-unit increase in $X_j$
 
 Example:
+
 - 50/50 chance: odds = 1
 - 80/20 chance: odds = 0.8/0.2 = 4
     - 4 times more chance of yes than no
@@ -245,6 +280,12 @@ diabetes_model <- glm(type ~ glu + age + bmi, data = Pima.tr,
 summary(diabetes_model)
 ```
 
+## Note: Multiplicative Effects
+- Be cautious when interpreting results!
+- There is an important difference between a linear model and logit model in how to interpret coefficients
+- As seen, the exponent of the coefficients represent the change in the odds ratio for a one-unit increase in the variable
+- So, in both binary and multinomial logistic regression: the effect of predictor variables is multiplicative, meaning they affect the odds of an outcome category, rather than having a simple additive effect on the probability
+
 # Boostrapping
 
 ## Assumptions in Regression Analysis
@@ -265,6 +306,8 @@ summary(diabetes_model)
   - Would your coefficients still be significant?
 - Resampling from the data to estimate the regression coefficients multiple times.
 - Central assumption for bootstrapping = The original sample accurately represents the actual population
+
+Note: we focus on non-parametric bootstrapping in this class
 
 ## Back to the US Arrests data
 ```{r}
@@ -335,12 +378,9 @@ confidence_intervals
 - But how can we use this information to assess the significance of our results?
 - Bootstrapping allows us to generate a distribution of coefficients.
 - We can compare our original regression coefficients to this distribution to assess significance.
-
-## Assessing Significance
-
-1. Calculate the confidence intervals for each coefficient using bootstrapped data.
-2. If the confidence interval of a coefficient includes zero, it suggests that the coefficient is not statistically significant.
-3. If the interval does not include zero, it suggests significance.
+- Calculate the confidence intervals for each coefficient using bootstrapped data.
+- If the confidence interval of a coefficient includes zero, it suggests that the coefficient is not statistically significant.
+- If the interval does not include zero, it suggests significance.
 
 ## Example: Murder Rate and Predictors
 ```{r}
@@ -351,9 +391,22 @@ get_regression_table(murder_model)
 confidence_intervals
 ```
 
-# End of the Course Material
+# Many More Models!
+## Additonal Models 
+- Parametric / semi-parametric bootstrapping
+- Instrumental variable models: use `ivreg`
+- Time series models: 
+  - Use `ts` package
+  - ARIMA models: use `auto.arima` or `Arima`
+- Panel data models: use `plm` for fixed effect models for example (DiD)
+- Count data models: use `glm` package and poisson or neg. binomial function
+- Machine learning models
 
-## Overview
+There is a LOT of information on the internet!!
+
+# End of the Course Material!
+
+## Course Overview
 | Week  | Topic                               | 
 |:------------|:------------------------------------|
 | *Week 1* | Introduction to R |

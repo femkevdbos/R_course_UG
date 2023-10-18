@@ -18,23 +18,21 @@ This website covers the materials for the course introducing R to University of 
 
 ---
 
-Instructors: 
+<strong>Instructors: </strong>
 
 [Femke van den Bos](femke.bos@statsghana.gov.gh)
 
 [Edem Titriku](edem.titriku@statsghana.gov.gh)
 
-Teaching assistants:
+<strong>Teaching assistants:</strong>
 
 Foster Agyare Okyere
 
 Joshua Mawutor
 
-Racheal Naa Adjeley Adjei 
-
 ---
 
-Please note that some of the material is adopted from [Steffen Eriksen](https://www.youtube.com/c/SteffensClassroom) (University of Groningen), [Laurent Smeets](https://github.com/Laurent-Smeets-GSS-Account/RGhana) (Ghana Statistical Service), [Gerko Vink](https://github.com/gerkovink/R) (Statistics Denmark), and other online resources.
+Please note that some of the material is adopted from [Steffen Eriksen](https://www.youtube.com/c/SteffensClassroom) (University of Groningen), [Laurent Smeets](https://github.com/Laurent-Smeets-GSS-Account/RGhana) (Ghana Statistical Service), [Gerko Vink](https://github.com/gerkovink/R) (Statistics Denmark), [Stan Koobs](University of Rotterdam), and online resources.
 
 ---
 # Overview
@@ -53,7 +51,7 @@ Our main goals are to provide you with a solid understanding of R, equip you wit
 
 ### Course schedule 
 | Week  | Day | Time      | Topic                               | 
-|:----------|:---------------------|:------------|:------------------------------------|
+|:----------|:-------------------------|:--------------|:------------------------------------|
 | *Week 1* |Friday - October 20 |9:00-12:00 | Introduction to R |
 | *Week 2* |Friday - October 27 |9:00-12:00 | Foundations of R |
 | *Week 3* |Friday - November 3 |9:00-12:00 | Data Wrangling |
@@ -64,7 +62,7 @@ Our main goals are to provide you with a solid understanding of R, equip you wit
 |  |Friday - December 8 |9:00-12:00 | Time for working on the report / catching up |
 | *Recap* |Friday - December 15 |9:00-12:00 | Recap Lecture + Assistance with Report |
 | |Friday - December 22 |9:00-12:00 | Time for working on the report |
-|  | *Christmas break!*  |    |    | |
+|  | *Christmas break!*  |    |    | 
 | *Presentations * |Friday - January 12 |9:00-12:00 | Presentations (pt.1) |
 | *Presentations * |Friday - January 19 |9:00-12:00 | Presentations (pt.2) |
 
@@ -134,32 +132,33 @@ The following links are useful references that connect to the material:
 - [Datacamp Tutorial on Pipes](https://www.datacamp.com/tutorial/pipe-r-tutorial)
 - [The `ggplot2` Reference Package](https://ggplot2.tidyverse.org/reference/)
 - [R Graph Gallery](https://r-graph-gallery.com/index.html)
+- [Timeseries Presentation](https://gss-datascience-training.netlify.app/content/slides/time_series/time_series#/title-slide)
 
-# Practicals
+# Assignments
 
 ## Column 1
 
-### Practical Assignments
+### Assignments
 Here you can find the assignments for the weekly homework assignments. Please note that these might also be adapted as we go, so make sure you use the most recent file when working on them.
 
 The deadline for each assignment is before the next lecture!
 
-- [Practical Assignment 1 (Deadline: Thursday )](Contents/Practicals/Week 1 Assignment.pdf)
+- [Assignment 1 (Deadline: Thursday 26-10-2023)](Contents/Assignments/Week 1 Assignment.pdf)
 
 
 ### Data
-The data that should be used for the practicals can be found here.
+The data that should be used for the assignments can be found here.
 
-- [2021 PHC - Education Data](Contents/Practicals/data/education.xlsx)
-- [2021 PHC - Housing Data](Contents/Practicals/data/housing.xlsx)
-- [2021 PHC - Population Data](Contents/Practicals/data/population.xlsx)
+- [2021 PHC - Education Data](Contents/Assignments/data/education.xlsx)
+- [2021 PHC - Housing Data](Contents/Assignments/data/housing.xlsx)
+- [2021 PHC - Population Data](Contents/Assignments/data/population.xlsx)
 
 ## Column 2
 
-### Solutions to Practicals
-After the weekly deadline, the solution to the practical will be uploaded here. (This will be after the following lecture.)
+### Solutions to Assignments
+After the weekly deadline, the solution to the assignment will be uploaded here. (This will be after the following lecture.)
 
-<!-- - [Solution Practical 1](Contents/Practicals/Assignment-Week-One-Solutions.html){target="_blank"} -->
+<!-- - [Solution Assignment 1](Contents/Assignments/Assignment-Week-One-Solutions.html){target="_blank"} -->
 
 # Assessment
 

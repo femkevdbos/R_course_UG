@@ -1,7 +1,7 @@
 ---
 title: 'Lecture 6'
 author: "Introduction into Data Modelling in R"
-date: "17-10-2023"
+date: 
 output:
   ioslides_presentation:
     logo: "figures/UoG_logo_small.png"
@@ -14,6 +14,9 @@ output:
 ```{r setup, include = FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(moderndive)
+library(lmtest)
+library(sandwich)
+library(stargazer)
 ```
 
 # Recap of Last Week
@@ -56,10 +59,13 @@ library(moderndive)
 - Investigating the linear relation between two variables
 - Linear: assumes a linear relation between x and y, if x increases by 1, y increases by the slope ($\beta$)
 - Simple: only one independent variable
-
 $$
 Y = \alpha + \beta X + \epsilon
 $$
+_ This often does not hold exactly in reality!
+- Modelling the exact reality is almost never possible
+- Our goal is to give an (easy to understand) estimate of reality
+- Often this simple model already gives many useful insights
 
 ## Assumptions of Linear Regressions (LINEE)
 
@@ -80,10 +86,12 @@ For multiple independent variables:
 Extra Assumption:  No perfect multicollinearity
 
   - There should not be perfect correlation between different X variables
+  
+Next week!
 
 # SLR in R
 ## Galton Dataset
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(HistData)
 
 # Load the dataset
@@ -141,7 +149,7 @@ library(moderndive)
 get_regression_table(model_outcome)
 ```
 
-# Testing the LINE Assumptions
+# Testing the LINEE Assumptions
 ## Assumptions of Linear Regressions (LINEE)
 
 1. <strong>L</strong>inearity of relationship between variables
@@ -154,13 +162,6 @@ get_regression_table(model_outcome)
     - Variance of the residuals is the same for each value of X
 5. <strong>E</strong>xogeneity (zero conditional mean)
     - The residuals should be independent of X (independent variables)
-
-## Assumptions of Linear Regressions - Multiple Regression
-For multiple independent variables:
-
-Extra Assumption:  No perfect multicollinearity
-
-  - There should not be perfect correlation between different X variables
   
 ## L: Linearity between X and Y 
 ```{r}
@@ -186,6 +187,21 @@ scatterplot_x_y
 plot(model_outcome$fitted.values, model_outcome$model$child)
 ```
 
+## L: Linearity between X and Y
+Ramsey RESET Test:  Ramsey Regression Equation Specification Error Test
+
+- General specification test for the linear regression model
+- $H_0$ = The linear regression model is correctly specified
+- $H_A$ = The model is misspecified due to omitted nonlinearities
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+# Perform the Ramsey RESET test
+reset_test <- resettest(model_outcome, power = 2)  
+# Specify the desired order (e.g., power = 2 for quadratic terms), often 2, 3, 4
+
+# Print the test results
+reset_test
+```
+
 ## L: Linearity between X and Y - Violated
 If it is violated:
 
@@ -197,26 +213,33 @@ If it is violated:
 - Mainly a problem in time series data:
   - No correlation between consecutive errors in time series data
 - Check with a residuals time series plot
+- Could also be a problem with clustered data
 - Durbin-Watson test
 - Ljung-Box test
 - You can assume this holds for non time series data usually
+  - But use theoretical reasoning for this
 
 ## I: Independence of Residuals
 In time series data you would plot residuals against time.
 
-Tests for autocorrelation (dependence between residuals): be careful with non-timeseries data!!
-```{r, message = F}
-# Load the lmtest package
-library(lmtest)
+Tests for autocorrelation (dependence between residuals)
 
-# Perform the Durbin Watson test - p < 0.05 suggests autocorrelation
+Durbin-Watson Test:
+
+- $H_0$ = Residuals are independent, no autocorrelation
+- $H_A$ = Autocorrelation between residuals
+```{r, message = F}
+# Perform the Durbin-Watson test - p < 0.05 suggests autocorrelation
 dwtest(model_outcome)
 ```
 
 ## I: Independence of Residuals
-In time series data you would plot residuals against time.
+Another tests for autocorrelation (dependence between residuals):
 
-Tests for autocorrelation (dependence between residuals): be careful with non-timeseries data!!
+Ljung-Box Test:
+
+- $H_0$ = Residuals are independent, no autocorrelation
+- $H_A$ = Autocorrelation between residuals
 ```{r}
 # Perform the Ljung-Box test on the residuals - p < 0.05 suggests serial correlation
 Box.test(model_outcome$residuals, type = "Ljung-Box")
@@ -225,8 +248,10 @@ Box.test(model_outcome$residuals, type = "Ljung-Box")
 ## I: Independence of Residuals - Violated
 If it is violated:
 
-1. Add lags of the dependent variable
-2. Add lags of independent variables
+1. Think about clusters in your data, cluster robust standard errors
+2. Try to understand theoretically what could cause this
+3. Add lags of the dependent variable
+4. Add lags of independent variables
 
 ## N: Normality of Residuals
 Draw a histogram of residuals:
@@ -347,26 +372,12 @@ If it is violated:
 ## E: Equality of Variance of Residuals (Homoskedasticity) - Violated
 Heteroskedastic-robust standard errors in R
 ```{r, warning=FALSE, message=FALSE}
-library(sandwich)
-library(lmtest)
-
 # Fit the linear regression model with heteroskedasticity-robust standard errors
 model <- lm(child ~ parent, data = Galton)
 robust_model <- coeftest(model, vcov = vcovHC(model, type = "HC3"))
 
 # View the results
 robust_model
-```
-
-## E: Equality of Variance of Residuals (Homoskedasticity) - Violated
-Heteroskedastic-robust standard errors in R
-```{r, warning=FALSE, message=FALSE}
-# Load the stargazer package (if not already loaded)
-library(stargazer)
-
-# Fit the linear regression model with robust standard errors
-model <- lm(child ~ parent, data = Galton)
-robust_model <- coeftest(model, vcov = vcovHC(model, type = "HC0"))
 ```
 
 ## E: Equality of Variance of Residuals
@@ -378,7 +389,7 @@ stargazer(model, robust_model, type = "text",
           star.cutoffs = c(0.05, 0.01, 0.001))
 ```
 
-## Exogeneity
+## E: Exogeneity
 - The residuals should be independent of X (independent variables)
 - Also assume zero conditional mean: mean of residuals is (approximately) zero
 - Plot residuals against independent variables
@@ -388,24 +399,13 @@ stargazer(model, robust_model, type = "text",
 - Measurement errors
 - Reverse causality
 
-## Exogeneity - Violated
+## E: Exogeneity - Violated
 - Add additional explanatory variables
 - Use instrumental variables
   - Correlated with the endogenous independent variable
   - But not with the error term
 - Hausman test
   - Compares a model with possible endogenous variable to one without
-- F-test of joint significance of independent variabels in explaining the error term
-
-## Multicollinearity
-- Important for multiple regression
-- Calculate the correlation matrix
-    - Values close to -1 or 1 indicate high correlation
-- Variance Inflation Factor (VIF): measure of correlation 
-    - VIF_i = 1 / (1 - R²_i)
-    - R²_i = coefficient of determination for the regression of the variable against all the other independent variables
-    - VIF greater than 5 = significant multicollinearity
-- Solution could be to remove an explanatory variable
 
 # Built in R checks for assumptions
 ## R checks for model assumptions

@@ -192,7 +192,6 @@ slide:not(.current) .plotly.html-widget{
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">17-10-2023</p>
           </hgroup>
   </slide>
 
@@ -261,12 +260,13 @@ slide:not(.current) .plotly.html-widget{
 <ul>
 <li>Investigating the linear relation between two variables</li>
 <li>Linear: assumes a linear relation between x and y, if x increases by 1, y increases by the slope (\(\beta\))</li>
-<li>Simple: only one independent variable</li>
-</ul>
-
-<p>\[
+<li>Simple: only one independent variable \[
 Y = \alpha + \beta X + \epsilon
-\]</p>
+\] _ This often does not hold exactly in reality!</li>
+<li>Modelling the exact reality is almost never possible</li>
+<li>Our goal is to give an (easy to understand) estimate of reality</li>
+<li>Often this simple model already gives many useful insights</li>
+</ul>
 
 </article></slide><slide class=""><hgroup><h2>Assumptions of Linear Regressions (LINEE)</h2></hgroup><article  id="assumptions-of-linear-regressions-linee" class="smaller ">
 
@@ -308,15 +308,15 @@ Y = \alpha + \beta X + \epsilon
 <li>There should not be perfect correlation between different X variables</li>
 </ul>
 
+<p>Next week!</p>
+
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>SLR in R</h2></hgroup><article  id="slr-in-r" class="smaller ">
 
 </article></slide><slide class=""><hgroup><h2>Galton Dataset</h2></hgroup><article  id="galton-dataset" class="smaller ">
 
-<pre class = 'prettyprint lang-r'>library(HistData)</pre>
+<pre class = 'prettyprint lang-r'>library(HistData)
 
-<pre >## Warning: package &#39;HistData&#39; was built under R version 4.2.3</pre>
-
-<pre class = 'prettyprint lang-r'># Load the dataset
+# Load the dataset
 data(Galton)
 
 # Explore the dataset
@@ -411,7 +411,7 @@ get_regression_table(model_outcome)</pre>
 ## 1 intercept   23.9       2.81       8.52       0   18.4     29.5  
 ## 2 parent       0.646     0.041     15.7        0    0.566    0.727</pre>
 
-</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Testing the LINE Assumptions</h2></hgroup><article  id="testing-the-line-assumptions" class="smaller ">
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Testing the LINEE Assumptions</h2></hgroup><article  id="testing-the-linee-assumptions" class="smaller ">
 
 </article></slide><slide class=""><hgroup><h2>Assumptions of Linear Regressions (LINEE)</h2></hgroup><article  id="assumptions-of-linear-regressions-linee-1" class="smaller ">
 
@@ -443,16 +443,6 @@ get_regression_table(model_outcome)</pre>
 </ul></li>
 </ol>
 
-</article></slide><slide class=""><hgroup><h2>Assumptions of Linear Regressions - Multiple Regression</h2></hgroup><article  id="assumptions-of-linear-regressions---multiple-regression-1" class="smaller ">
-
-<p>For multiple independent variables:</p>
-
-<p>Extra Assumption: No perfect multicollinearity</p>
-
-<ul>
-<li>There should not be perfect correlation between different X variables</li>
-</ul>
-
 </article></slide><slide class=""><hgroup><h2>L: Linearity between X and Y</h2></hgroup><article  id="l-linearity-between-x-and-y" class="smaller ">
 
 <pre class = 'prettyprint lang-r'># Scatterplot of X and Y
@@ -479,6 +469,29 @@ plot(model_outcome$fitted.values, model_outcome$model$child)</pre>
 
 <p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-9-1.png" width="720" style="display: block; margin: auto;" /></p>
 
+</article></slide><slide class=""><hgroup><h2>L: Linearity between X and Y</h2></hgroup><article  id="l-linearity-between-x-and-y-3" class="smaller ">
+
+<p>Ramsey RESET Test: Ramsey Regression Equation Specification Error Test</p>
+
+<ul>
+<li>General specification test for the linear regression model</li>
+<li>\(H_0\) = The linear regression model is correctly specified</li>
+<li>\(H_A\) = The model is misspecified due to omitted nonlinearities</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># Perform the Ramsey RESET test
+reset_test &lt;- resettest(model_outcome, power = 2)  
+# Specify the desired order (e.g., power = 2 for quadratic terms), often 2, 3, 4
+
+# Print the test results
+reset_test</pre>
+
+<pre >## 
+##  RESET test
+## 
+## data:  model_outcome
+## RESET = 4.6404, df1 = 1, df2 = 925, p-value = 0.03149</pre>
+
 </article></slide><slide class=""><hgroup><h2>L: Linearity between X and Y - Violated</h2></hgroup><article  id="l-linearity-between-x-and-y---violated" class="smaller ">
 
 <p>If it is violated:</p>
@@ -501,21 +514,30 @@ plot(model_outcome$fitted.values, model_outcome$model$child)</pre>
 <li>No correlation between consecutive errors in time series data</li>
 </ul></li>
 <li>Check with a residuals time series plot</li>
+<li>Could also be a problem with clustered data</li>
 <li>Durbin-Watson test</li>
 <li>Ljung-Box test</li>
-<li>You can assume this holds for non time series data usually</li>
+<li>You can assume this holds for non time series data usually
+
+<ul>
+<li>But use theoretical reasoning for this</li>
+</ul></li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>I: Independence of Residuals</h2></hgroup><article  id="i-independence-of-residuals-1" class="smaller ">
 
 <p>In time series data you would plot residuals against time.</p>
 
-<p>Tests for autocorrelation (dependence between residuals): be careful with non-timeseries data!!</p>
+<p>Tests for autocorrelation (dependence between residuals)</p>
 
-<pre class = 'prettyprint lang-r'># Load the lmtest package
-library(lmtest)
+<p>Durbin-Watson Test:</p>
 
-# Perform the Durbin Watson test - p &lt; 0.05 suggests autocorrelation
+<ul>
+<li>\(H_0\) = Residuals are independent, no autocorrelation</li>
+<li>\(H_A\) = Autocorrelation between residuals</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># Perform the Durbin-Watson test - p &lt; 0.05 suggests autocorrelation
 dwtest(model_outcome)</pre>
 
 <pre >## 
@@ -527,9 +549,14 @@ dwtest(model_outcome)</pre>
 
 </article></slide><slide class=""><hgroup><h2>I: Independence of Residuals</h2></hgroup><article  id="i-independence-of-residuals-2" class="smaller ">
 
-<p>In time series data you would plot residuals against time.</p>
+<p>Another tests for autocorrelation (dependence between residuals):</p>
 
-<p>Tests for autocorrelation (dependence between residuals): be careful with non-timeseries data!!</p>
+<p>Ljung-Box Test:</p>
+
+<ul>
+<li>\(H_0\) = Residuals are independent, no autocorrelation</li>
+<li>\(H_A\) = Autocorrelation between residuals</li>
+</ul>
 
 <pre class = 'prettyprint lang-r'># Perform the Ljung-Box test on the residuals - p &lt; 0.05 suggests serial correlation
 Box.test(model_outcome$residuals, type = &quot;Ljung-Box&quot;)</pre>
@@ -545,6 +572,8 @@ Box.test(model_outcome$residuals, type = &quot;Ljung-Box&quot;)</pre>
 <p>If it is violated:</p>
 
 <ol>
+<li>Think about clusters in your data, cluster robust standard errors</li>
+<li>Try to understand theoretically what could cause this</li>
 <li>Add lags of the dependent variable</li>
 <li>Add lags of independent variables</li>
 </ol>
@@ -567,7 +596,7 @@ hist_residuals &lt;- ggplot(residuals_df,
 <pre class = 'prettyprint lang-r'># Plot a histogram of the residuals
 hist_residuals </pre>
 
-<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-13-1.png" width="720" style="display: block; margin: auto;" /></p>
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-14-1.png" width="720" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=""><hgroup><h2>N: Normality of Residuals</h2></hgroup><article  id="n-normality-of-residuals-2" class="smaller ">
 
@@ -597,7 +626,7 @@ qq_plot &lt;- ggplot(qq_data_std,
 <pre class = 'prettyprint lang-r'># Plot a histogram of the residuals
 qq_plot </pre>
 
-<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-15-1.png" width="720" style="display: block; margin: auto;" /></p>
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-16-1.png" width="720" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=""><hgroup><h2>N: Normality of Residuals</h2></hgroup><article  id="n-normality-of-residuals-4" class="smaller ">
 
@@ -644,7 +673,7 @@ residuals_x &lt;- ggplot(regression_points,
 <pre class = 'prettyprint lang-r'># Plot residuals against X
 residuals_x </pre>
 
-<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-18-1.png" width="720" style="display: block; margin: auto;" /></p>
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-19-1.png" width="720" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals (Homoskedasticity)</h2></hgroup><article  id="e-equality-of-variance-of-residuals-homoskedasticity-1" class="smaller ">
 
@@ -665,7 +694,7 @@ residuals_predicted_y &lt;- ggplot(regression_points,
 <pre class = 'prettyprint lang-r'># Plot residuals against predicted Y
 residuals_predicted_y </pre>
 
-<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-20-1.png" width="720" style="display: block; margin: auto;" /></p>
+<p><img src="Lecture_week_6_files/figure-html/unnamed-chunk-21-1.png" width="720" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals (Homoskedasticity)</h2></hgroup><article  id="e-equality-of-variance-of-residuals-homoskedasticity-2" class="smaller ">
 
@@ -694,10 +723,7 @@ bptest(model_outcome)</pre>
 
 <p>Heteroskedastic-robust standard errors in R</p>
 
-<pre class = 'prettyprint lang-r'>library(sandwich)
-library(lmtest)
-
-# Fit the linear regression model with heteroskedasticity-robust standard errors
+<pre class = 'prettyprint lang-r'># Fit the linear regression model with heteroskedasticity-robust standard errors
 model &lt;- lm(child ~ parent, data = Galton)
 robust_model &lt;- coeftest(model, vcov = vcovHC(model, type = &quot;HC3&quot;))
 
@@ -712,17 +738,6 @@ robust_model</pre>
 ## parent       0.646291   0.040191 16.0806 &lt; 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</pre>
-
-</article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals (Homoskedasticity) - Violated</h2></hgroup><article  id="e-equality-of-variance-of-residuals-homoskedasticity---violated-2" class="smaller ">
-
-<p>Heteroskedastic-robust standard errors in R</p>
-
-<pre class = 'prettyprint lang-r'># Load the stargazer package (if not already loaded)
-library(stargazer)
-
-# Fit the linear regression model with robust standard errors
-model &lt;- lm(child ~ parent, data = Galton)
-robust_model &lt;- coeftest(model, vcov = vcovHC(model, type = &quot;HC0&quot;))</pre>
 
 </article></slide><slide class=""><hgroup><h2>E: Equality of Variance of Residuals</h2></hgroup><article  id="e-equality-of-variance-of-residuals-2" class="smaller ">
 
@@ -746,7 +761,7 @@ stargazer(model, robust_model, type = &quot;text&quot;,
 ##                             (0.041)            (0.040)  
 ##                                                         
 ## Constant                   23.942***          23.942*** 
-##                             (2.811)            (2.733)  
+##                             (2.811)            (2.744)  
 ##                                                         
 ## --------------------------------------------------------
 ## Observations                  928                       
@@ -757,7 +772,7 @@ stargazer(model, robust_model, type = &quot;text&quot;,
 ## ========================================================
 ## Note:                      *p&lt;0.05; **p&lt;0.01; ***p&lt;0.001</pre>
 
-</article></slide><slide class=""><hgroup><h2>Exogeneity</h2></hgroup><article  id="exogeneity" class="smaller ">
+</article></slide><slide class=""><hgroup><h2>E: Exogeneity</h2></hgroup><article  id="e-exogeneity" class="smaller ">
 
 <ul>
 <li><p>The residuals should be independent of X (independent variables)</p></li>
@@ -769,7 +784,7 @@ stargazer(model, robust_model, type = &quot;text&quot;,
 <li><p>Reverse causality</p></li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Exogeneity - Violated</h2></hgroup><article  id="exogeneity---violated" class="smaller ">
+</article></slide><slide class=""><hgroup><h2>E: Exogeneity - Violated</h2></hgroup><article  id="e-exogeneity---violated" class="smaller ">
 
 <ul>
 <li>Add additional explanatory variables</li>
@@ -784,26 +799,6 @@ stargazer(model, robust_model, type = &quot;text&quot;,
 <ul>
 <li>Compares a model with possible endogenous variable to one without</li>
 </ul></li>
-<li>F-test of joint significance of independent variabels in explaining the error term</li>
-</ul>
-
-</article></slide><slide class=""><hgroup><h2>Multicollinearity</h2></hgroup><article  id="multicollinearity" class="smaller ">
-
-<ul>
-<li>Important for multiple regression</li>
-<li>Calculate the correlation matrix
-
-<ul>
-<li>Values close to -1 or 1 indicate high correlation</li>
-</ul></li>
-<li>Variance Inflation Factor (VIF): measure of correlation
-
-<ul>
-<li>VIF_i = 1 / (1 - R²_i)</li>
-<li>R²_i = coefficient of determination for the regression of the variable against all the other independent variables</li>
-<li>VIF greater than 5 = significant multicollinearity</li>
-</ul></li>
-<li>Solution could be to remove an explanatory variable</li>
 </ul>
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Built in R checks for assumptions</h2></hgroup><article  id="built-in-r-checks-for-assumptions" class="smaller ">

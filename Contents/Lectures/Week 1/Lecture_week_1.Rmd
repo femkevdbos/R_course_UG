@@ -1,7 +1,7 @@
 ---
 title: 'Lecture 1'
 author: "Introduction to R for Data Analysis"
-date: "04-09-2023"
+date: 
 output:
   ioslides_presentation:
     fig_height: 15
@@ -36,6 +36,19 @@ output:
   - Motivating you to become a critical thinker
 - I am always open for questions, feedback and critical discussions!
 
+## Who else is teaching?
+Edem Titriku
+
+- Data Scientist at Ghana Statistical Service
+- Very skilled in using R and other programming languages
+- A lot of knowledge on what data GSS has that might be useful to you
+- We worked together on the course materials and will both give some lectures
+
+Teaching Assistants:
+
+- Foster Agyare Okyere
+- Joshua Mawutor
+
 ## Who are you?
 - What are you expectations?
 - What do you want to learn?
@@ -51,6 +64,7 @@ output:
 - Data modelling
   - Simple linear regression
   - Multiple regression
+  - Other models
 
 Main goals:
 
@@ -75,20 +89,20 @@ Main goals:
 This course is an introduction to R: focused on teaching you how to **analyse data in R** and teaching critical thinking to **tell a story** with data.
 
 ## Overview of the course
-- Weekly combination of lecture and practical
+- Weekly combination of lecture and practical session
 - Weekly assignment
-- 8 weeks of core material
+- 7 weeks of core material
 - One recap session
 - Two presentation sessions (after the Christmas break)
 - Final assessment
 
 ## Timeline
-- Lecture: week 1-8 on Friday, 09:00-10:30 
-  - Additional recap session in week 9
+- Lecture: week 1-7 on Friday, 09:00-10:30 
+  - Additional recap session (TBD)
   - No planned session in other weeks, except when schedule has to be changed due to circumstances
-- Practical: week 1-8 on Friday 10:30-12:00 (after lecture)
-- Presentations: in the two weeks after the Christmas break
-- Final assessment (Deadline = 2 February)
+- Practical: week 1-7 on Friday 10:30-12:00 (after lecture)
+- Presentations: in the two weeks after the Christmas break (Jan 12 and 19)
+- Final assessment (Deadline = January 26)
 
 ## Course Schedule
 | Week  | Topic                               | 
@@ -107,7 +121,7 @@ This course is an introduction to R: focused on teaching you how to **analyse da
   - Look at what the **Ghana Statistical Service** has available
   - Choose data that interests you
 - Alongside the practical assignments you apply the new skills every week
-- Group work: group of 2/3 people for the final assignment
+- Group work: group of 3/4 people for the final assignment
 - Individually work on the weekly assignments, but helping each other is encouraged
 - Final outcomes:
   - 1: A report describing the data

@@ -192,7 +192,6 @@ slide:not(.current) .plotly.html-widget{
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">17-10-2023</p>
           </hgroup>
   </slide>
 
@@ -216,6 +215,8 @@ slide:not(.current) .plotly.html-widget{
 <li>Multiple Regression</li>
 <li>Logit Model</li>
 <li>Bootstrapping</li>
+<li>More Models</li>
+<li>Course Overview</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Steps of Data Analysis</h2></hgroup><article  id="steps-of-data-analysis" class="smaller ">
@@ -364,6 +365,14 @@ summary(lifeExp_model)</pre>
 ## 4 continent: Europe       22.8      1.70     13.5        0     19.5     26.2
 ## 5 continent: Oceania      25.9      5.33      4.86       0     15.4     36.4</pre>
 
+</article></slide><slide class=""><hgroup><h2>Interpreting Results</h2></hgroup><article  id="interpreting-results" class="smaller ">
+
+<ul>
+<li>Base category</li>
+<li>Cannot include all categorical variables</li>
+<li>Ceteris paribus = all other things being equal</li>
+</ul>
+
 </article></slide><slide class=""><hgroup><h2>Fitted Values and Residuals</h2></hgroup><article  id="fitted-values-and-residuals" class="smaller ">
 
 <pre class = 'prettyprint lang-r'>regression_points &lt;- get_regression_points(lifeExp_model, ID = &quot;country&quot;)
@@ -426,6 +435,41 @@ summary(murder_model)</pre>
 ## Multiple R-squared:  0.6721, Adjusted R-squared:  0.6507 
 ## F-statistic: 31.42 on 3 and 46 DF,  p-value: 3.322e-11</pre>
 
+</article></slide><slide class=""><hgroup><h2>Assumptions of Linear Regressions - Multiple Regression</h2></hgroup><article  id="assumptions-of-linear-regressions---multiple-regression" class="smaller ">
+
+<p>For multiple independent variables:</p>
+
+<p>Extra Assumption: No perfect multicollinearity</p>
+
+<ul>
+<li>There should not be perfect correlation between different X variables</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Multicollinearity</h2></hgroup><article  id="multicollinearity" class="smaller ">
+
+<ul>
+<li>Important for multiple regression</li>
+<li>If X and Z are highly correlated -&gt; difficult to distinguish effect of X and Z</li>
+<li>Calculate the correlation matrix
+
+<ul>
+<li>Values close to -1 or 1 indicate high correlation</li>
+</ul></li>
+<li>Variance Inflation Factor (VIF): measure of correlation
+
+<ul>
+<li>VIF_i = 1 / (1 - R²_i)</li>
+<li>R²_i = coefficient of determination for the regression of the variable against all the other independent variables</li>
+<li>VIF greater than 5 = significant multicollinearity</li>
+</ul></li>
+<li>Solutions:
+
+<ul>
+<li>Remove an explanatory variable</li>
+<li>Combine explanatory variables</li>
+</ul></li>
+</ul>
+
 </article></slide><slide class=""><hgroup><h2>Test for Multicollinearity - Correlation Matrix</h2></hgroup><article  id="test-for-multicollinearity---correlation-matrix" class="smaller ">
 
 <pre class = 'prettyprint lang-r'># Create a correlation matrix
@@ -465,12 +509,12 @@ vif(murder_model)</pre>
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Interaction Terms</h2></hgroup><article  id="interaction-terms" class="smaller ">
 
-</article></slide><slide class=""><hgroup><h2>Multiple Regression with Interaction Terms</h2></hgroup><article  id="multiple-regression-with-interaction-terms" class="smaller ">
+</article></slide><slide class=""><hgroup><h2>Multiple Regression + Interaction Terms</h2></hgroup><article  id="multiple-regression-interaction-terms" class="smaller ">
 
 <pre class = 'prettyprint lang-r'># Fit a multiple regression model with the Diet and Time interaction
 chickweight_model &lt;- lm(weight ~ Time * Diet, data = ChickWeight)</pre>
 
-</article></slide><slide class=""><hgroup><h2>Multiple Regression with Interaction Terms</h2></hgroup><article  id="multiple-regression-with-interaction-terms-1" class="smaller ">
+</article></slide><slide class=""><hgroup><h2>Multiple Regression + Interaction Terms</h2></hgroup><article  id="multiple-regression-interaction-terms-1" class="smaller ">
 
 <pre class = 'prettyprint lang-r'># Summary of the model
 summary(chickweight_model)</pre>
@@ -500,19 +544,39 @@ summary(chickweight_model)</pre>
 ## Multiple R-squared:  0.773,  Adjusted R-squared:  0.7702 
 ## F-statistic: 277.3 on 7 and 570 DF,  p-value: &lt; 2.2e-16</pre>
 
+</article></slide><slide class=""><hgroup><h2>Interpreting Results</h2></hgroup><article  id="interpreting-results-1" class="smaller ">
+
+<ul>
+<li>Why is diet 1 not included?</li>
+<li>What is the effect of time increasing by 1?</li>
+<li>What is the difference between Diet 1 and 2 at time = 0?</li>
+<li>What is the difference in the effect of time between Diet 1 and diet 3?</li>
+</ul>
+
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Logit</h2></hgroup><article  id="logit" class="smaller ">
 
 </article></slide><slide class=""><hgroup><h2>Introduction to the Logit Model</h2></hgroup><article  id="introduction-to-the-logit-model" class="smaller ">
 
 <ul>
 <li>Binary dependent variable</li>
-<li>Use the logistic function to estimate \(P(Y = 1)\)</li>
+<li>Use the logistic function to estimate \(P(Y = 1 ∣ X=x)\)</li>
+<li>In the linear regression we estimate \(E(Y ∣ X=x)\)</li>
 <li>\(p(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + \ldots + \beta_pX_p)}}\)</li>
 <li>Log-odds ratio: \(\log\left(\frac{p(Y = 1)}{1 - p(Y = 1)}\right) = \beta_0 + \beta_1X_1 + \beta_2X_2 + \ldots + \beta_pX_p\)</li>
 <li>Hence \(exp(\beta_j)\) is the change in the odds of the event happening for a one-unit increase in \(X_j\)</li>
 </ul>
 
-<p>Example: - 50/50 chance: odds = 1 - 80/20 chance: odds = 0.8/0.2 = 4 - 4 times more chance of yes than no - The odds of passing is 4 (to 1)</p>
+<p>Example:</p>
+
+<ul>
+<li>50/50 chance: odds = 1</li>
+<li>80/20 chance: odds = 0.8/0.2 = 4
+
+<ul>
+<li>4 times more chance of yes than no</li>
+<li>The odds of passing is 4 (to 1)</li>
+</ul></li>
+</ul>
 
 </article></slide><slide class=""><hgroup><h2>Introduction to the Logit Model</h2></hgroup><article  id="introduction-to-the-logit-model-1" class="smaller ">
 
@@ -587,6 +651,15 @@ summary(diabetes_model)</pre>
 ## 
 ## Number of Fisher Scoring iterations: 5</pre>
 
+</article></slide><slide class=""><hgroup><h2>Note: Multiplicative Effects</h2></hgroup><article  id="note-multiplicative-effects" class="smaller ">
+
+<ul>
+<li>Be cautious when interpreting results!</li>
+<li>There is an important difference between a linear model and logit model in how to interpret coefficients</li>
+<li>As seen, the exponent of the coefficients represent the change in the odds ratio for a one-unit increase in the variable</li>
+<li>So, in both binary and multinomial logistic regression: the effect of predictor variables is multiplicative, meaning they affect the odds of an outcome category, rather than having a simple additive effect on the probability</li>
+</ul>
+
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Boostrapping</h2></hgroup><article  id="boostrapping" class="smaller ">
 
 </article></slide><slide class=""><hgroup><h2>Assumptions in Regression Analysis</h2></hgroup><article  id="assumptions-in-regression-analysis" class="smaller ">
@@ -622,6 +695,8 @@ summary(diabetes_model)</pre>
 <li>Resampling from the data to estimate the regression coefficients multiple times.</li>
 <li>Central assumption for bootstrapping = The original sample accurately represents the actual population</li>
 </ul>
+
+<p>Note: we focus on non-parametric bootstrapping in this class</p>
 
 </article></slide><slide class=""><hgroup><h2>Back to the US Arrests data</h2></hgroup><article  id="back-to-the-us-arrests-data" class="smaller ">
 
@@ -715,15 +790,10 @@ confidence_intervals</pre>
 <li>But how can we use this information to assess the significance of our results?</li>
 <li>Bootstrapping allows us to generate a distribution of coefficients.</li>
 <li>We can compare our original regression coefficients to this distribution to assess significance.</li>
-</ul>
-
-</article></slide><slide class=""><hgroup><h2>Assessing Significance</h2></hgroup><article  id="assessing-significance" class="smaller ">
-
-<ol>
 <li>Calculate the confidence intervals for each coefficient using bootstrapped data.</li>
 <li>If the confidence interval of a coefficient includes zero, it suggests that the coefficient is not statistically significant.</li>
 <li>If the interval does not include zero, it suggests significance.</li>
-</ol>
+</ul>
 
 </article></slide><slide class=""><hgroup><h2>Example: Murder Rate and Predictors</h2></hgroup><article  id="example-murder-rate-and-predictors" class="smaller ">
 
@@ -747,9 +817,29 @@ confidence_intervals</pre>
 ## UrbanPop  -0.11341254 0.0002378989
 ## Rape      -0.05135256 0.2010056714</pre>
 
-</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>End of the Course Material</h2></hgroup><article  id="end-of-the-course-material" class="smaller ">
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Many More Models!</h2></hgroup><article  id="many-more-models" class="smaller ">
 
-</article></slide><slide class=""><hgroup><h2>Overview</h2></hgroup><article  id="overview" class="smaller ">
+</article></slide><slide class=""><hgroup><h2>Additonal Models</h2></hgroup><article  id="additonal-models" class="smaller ">
+
+<ul>
+<li>Parametric / semi-parametric bootstrapping</li>
+<li>Instrumental variable models: use <code>ivreg</code></li>
+<li>Time series models:
+
+<ul>
+<li>Use <code>ts</code> package</li>
+<li>ARIMA models: use <code>auto.arima</code> or <code>Arima</code></li>
+</ul></li>
+<li>Panel data models: use <code>plm</code> for fixed effect models for example (DiD)</li>
+<li>Count data models: use <code>glm</code> package and poisson or neg. binomial function</li>
+<li>Machine learning models</li>
+</ul>
+
+<p>There is a LOT of information on the internet!!</p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>End of the Course Material!</h2></hgroup><article  id="end-of-the-course-material" class="smaller ">
+
+</article></slide><slide class=""><hgroup><h2>Course Overview</h2></hgroup><article  id="course-overview" class="smaller ">
 
 <table class = 'rmdtable'>
 <tr class="header">
