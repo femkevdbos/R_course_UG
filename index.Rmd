@@ -144,6 +144,7 @@ Here you can find the assignments for the weekly homework assignments. Please no
 The deadline for each assignment is before the next lecture!
 
 - [Assignment 1 (Deadline: Thursday 26-10-2023)](Contents/Assignments/Week 1 Assignment.pdf)
+- [Assignment 2 (Deadline: Thursday 02-11-2023)](Contents/Assignments/Week 2 Assignment.pdf)
 
 
 ### Data

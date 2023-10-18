@@ -431,8 +431,7 @@ glimpse(population)</code></pre>
 It includes unique numerical identifiers for individuals nqid and pid,
 along with information on geographical regions, urban or rural
 residency, gender, age, marital status, and relationship status.</p>
-<p><strong>Question 3a: What is the minimum and maximum
-age?</strong></p>
+<p><strong>Question 3: What is the minimum and maximum age?</strong></p>
 <pre class="r"><code>#Minimum age 
 min_age &lt;- min(population$p02)
 
@@ -442,7 +441,7 @@ min_age</code></pre>
 
 max_age</code></pre>
 <pre><code>## [1] &quot;99&quot;</code></pre>
-<p><strong>Question 3b : Subset the data for youth population aged 15 to
+<p><strong>Question 4 : Subset the data for youth population aged 15 to
 35 years and assign it to a new object. (Verify if the “age” variable is
 of numeric class; if it isn’t, convert it to numeric)</strong></p>
 <pre class="r"><code># Checking if age is numeric
@@ -461,12 +460,9 @@ nrow(youth_pop)</code></pre>
 
 nrow(youth_pop1)</code></pre>
 <pre><code>## [1] 117766</code></pre>
-<p><strong>Question 3c: How many rows are there in the subset data, and
-what does it mean?</strong></p>
 <pre class="r"><code>nrow(youth_pop1)</code></pre>
 <pre><code>## [1] 117766</code></pre>
-<p>The youth population of Ghana is 117766</p>
-<p><strong>Question 4a: Load the education dataset and print the unique
+<p><strong>Question 5: Load the education dataset and print the unique
 categories of the educational level column. What are your
 observations?</strong></p>
 <pre class="r"><code>#Loading education dataset
@@ -501,7 +497,7 @@ glimpse(education)</code></pre>
 ## [17] &quot;Other (specify)&quot;</code></pre>
 <p>There are 17 unique levels of education including NA category
 indicating missing.</p>
-<p><strong>Question 4b) Merge the education dataset with the population
+<p><strong>Question 6: Merge the education dataset with the population
 dataset using cbind and assign it to a new object (Note: The number of
 rows for the two datasets is the same). What are your
 observations?</strong></p>
@@ -528,7 +524,7 @@ str(pop_edu)</code></pre>
 <pre class="r"><code>pop_edu$p02 &lt;- as.numeric(as.character(pop_edu$p02))</code></pre>
 <p>The nqid, pid and region columns became duplicated because they were
 present in both datasets.</p>
-<p><strong>Question 5: Using an appropriate method and the unique ids
+<p><strong>Question 7: Using an appropriate method and the unique ids
 (nqid, pid) along with the common variable region in both datasets,
 merge the datasets again. What is the difference between the two merged
 datasets?</strong></p>
@@ -554,22 +550,8 @@ str(popedu)</code></pre>
 308,357 records, 14 variables whilst the second has 308,357 but 11
 variables. Thus the most appropriate method is using the left join,
 because the was a slight difference in the colnames.</p>
-<p><strong>Question 6a: Are there any missing values in the educational
-level column of the second merged dataset?</strong></p>
-<pre class="r"><code>#Checking missing values in the educational level column
- any(is.na(popedu$p12b))</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code># Total missing in educational level
-
-missing &lt;- sum(is.na(popedu$p12b))
-
-missing</code></pre>
-<pre><code>## [1] 81826</code></pre>
-<p>There are 81,826 missings in the educational level column. This is
-because education level is not answered by population less than 3 years
-and also those who have never attended school.</p>
-<p><strong>Question 6b: Subset the merged dataset to include population
-3 years and older.</strong></p>
+<p><strong>Question 8: Subset the merged dataset to include population 3
+years and older.</strong></p>
 <pre class="r"><code>education_3yrs_older &lt;- popedu[popedu$p02 &gt;= 3,]
 
 nrow(education_3yrs_older)</code></pre>
@@ -579,25 +561,12 @@ nrow(education_3yrs_older)</code></pre>
 
 nrow(education_3yrs_older1)</code></pre>
 <pre><code>## [1] 285983</code></pre>
-<p><strong>Question 6c: Export the extracted data from question 6b in
+<p><strong>Question 9: Export the extracted data from question 8 in
 excel format.</strong></p>
 <pre class="r"><code>write.xlsx(education_3yrs_older, &quot;education_data.xlsx&quot;)</code></pre>
-<p><strong>Question 7: Subset the dataset from question 6b to include
-individuals that have never attended school and assign to a new
-object.</strong></p>
-<pre class="r"><code>never_attended_school &lt;- education_3yrs_older[education_3yrs_older$p12a == &quot;Never attended&quot;,]
-
-nrow(never_attended_school)</code></pre>
-<pre><code>## [1] 59452</code></pre>
-<p>Alternatively,</p>
-<pre class="r"><code>never_attended_sch &lt;- subset(education_3yrs_older, 
-                             p12a == &quot;Never attended&quot;)
-
-nrow(never_attended_sch)</code></pre>
-<pre><code>## [1] 59452</code></pre>
-<p><strong>Question 8: How many individuals are currently attending,
+<p><strong>Question 10: How many individuals are currently attending,
 have a master’s degree,and are from the Greater Accra region using the
-data from question 4e?</strong></p>
+data from question 8?</strong></p>
 <pre class="r"><code>masters_degree_GA &lt;- education_3yrs_older[
   education_3yrs_older$p12a == &quot;Attending now&quot; &amp; 
   education_3yrs_older$p12b == &quot;Tertiary - Master?s Degree&quot; &amp; 
@@ -615,47 +584,6 @@ nrow(masters_degree_GA)</code></pre>
 
 nrow(mastersdegree_GA)</code></pre>
 <pre><code>## [1] 146</code></pre>
-<p><strong>Question 9: What is the lowest age among individuals with a
-PhD?</strong></p>
-<pre class="r"><code>phd = subset(education_3yrs_older, 
-             p12b == &quot;Tertiary - PhD&quot;)
-
-#Finding the minimum age
-min(phd$p02)</code></pre>
-<pre><code>## [1] 22</code></pre>
-<p>or</p>
-<pre class="r"><code>min_age_phd = min(subset(education_3yrs_older, 
-                    p12b == &quot;Tertiary - PhD&quot;, p02))
-
-#Finding the minimum age
-min_age_phd</code></pre>
-<pre><code>## [1] 22</code></pre>
-<p>Alternatively,</p>
-<pre class="r"><code>phd1 &lt;- education_3yrs_older[education_3yrs_older$p12b == &quot;Tertiary - PhD&quot; &amp; !is.na(education_3yrs_older$p12b), ]
-
-min(phd1$p02)</code></pre>
-<pre><code>## [1] 22</code></pre>
-<p>or</p>
-<pre class="r"><code>min_age_phd1 &lt;- min(education_3yrs_older[education_3yrs_older$p12b == &quot;Tertiary - PhD&quot; &amp; !is.na(education_3yrs_older$p12b), &quot;p02&quot;])
-min_age_phd1</code></pre>
-<pre><code>## [1] 22</code></pre>
-<p><strong>Question 10: How many individuals are older than 15 years old
-and currently attending a primary school education level?</strong></p>
-<pre class="r"><code>older_than_15_prim_sch &lt;- education_3yrs_older[
-  education_3yrs_older$p02 &gt; 15 &amp; 
-  education_3yrs_older$p12a == &quot;Attending now&quot; &amp;
-  education_3yrs_older$p12b == &quot;Primary&quot;  &amp;
-  !is.na(education_3yrs_older$p12b), ]
-
-nrow(older_than_15_prim_sch)</code></pre>
-<pre><code>## [1] 0</code></pre>
-<p>Alternatively,</p>
-<pre class="r"><code>older_than_15_prim_sch &lt;- subset(education_3yrs_older, 
-                                 p12a == &quot;Attending now&quot; &amp; 
-                                   p12b == &quot;Primary&quot; &amp; p02 &gt; 15)
-
-nrow(older_than_15_prim_sch)</code></pre>
-<pre><code>## [1] 0</code></pre>
 
 
 
