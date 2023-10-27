@@ -167,4 +167,5 @@ After the weekly deadline, the solution to the assignment will be uploaded here.
 The instructions to the final assessment can be found here, along with required data sets.
 
 - [Final Assessment - Instructions](Contents/Assessments/Instructions_final_assessment.pdf)
+- [Final Assessment - Groups](Contents/Assessments/Groups_final_assessment.pdf)
 
