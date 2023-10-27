@@ -213,10 +213,6 @@ d[, 2] # The 2nd column
 d[, "Age"] # The column with as title Age 
 d$Age
 ```
-which all yield the second column, in which the ages are displayed. 
-
-R is case sensitive!! so `d$age` would not have worked.
-
 **Question:** Which method do you think is best to use?
 
 ## Indexing an array
@@ -481,7 +477,7 @@ unique(ChickWeight$Diet)
 - If two datasets have the exact same number of rows you can use `cbind(data_1, data_2)` to merge their columns together
   - When can you do this?
   - When can't you do this?
-- When can't you use neither `rbind` nor `cbind`?
+- When can you use neither `rbind` nor `cbind`?
 
 ## More advanced joining of datasets
 - If you want to join based on a certain column value we use 'join' functions

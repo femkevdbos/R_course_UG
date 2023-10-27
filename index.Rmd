@@ -159,7 +159,7 @@ The data that should be used for the assignments can be found here.
 ### Solutions to Assignments
 After the weekly deadline, the solution to the assignment will be uploaded here. (This will be after the following lecture.)
 
-<!-- - [Solution Assignment 1](Contents/Assignments/Assignment-Week-One-Solutions.html){target="_blank"} -->
+- [Solution Assignment 1](Contents/Assignments/Assignment-Week-One-Solutions.html){target="_blank"}
 
 # Assessment
 
