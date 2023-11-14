@@ -55,13 +55,13 @@ Our main goals are to provide you with a solid understanding of R, equip you wit
 | *Week 1* |Friday - October 20 |9:00-12:00 | Introduction to R |
 | *Week 2* |Friday - October 27 |9:00-12:00 | Foundations of R |
 | *Week 3* |Friday - November 3 |9:00-12:00 | Data Wrangling |
-| *Week 4* |Friday - November 10 |9:00-12:00 | Data Visualization (pt.1) |
-| *Week 5* |Day TBD |9:00-12:00 | Data Visualization (pt.2) |
-| *Week 6* |Friday - November 24 |9:00-12:00 | Introduction into Data Modelling in R |
-| *Week 7* |Day TBD |9:00-12:00 | More on Data Modelling |
-|  |Friday - December 8 |9:00-12:00 | Time for working on the report / catching up |
-| *Recap* |Friday - December 15 |9:00-12:00 | Recap Lecture + Assistance with Report |
-| |Friday - December 22 |9:00-12:00 | Time for working on the report |
+| XXX |Friday - November 10 | XXX | No Class |
+| *Week 4* |Friday - November 17 |9:00-12:00 | Data Visualization (pt.1) |
+| *Week 5* |Friday - November 24 |9:00-12:00 | Data Visualization (pt.2) |
+| *Week 6* |Friday - December 1 |9:00-12:00 | Introduction into Data Modelling in R |
+| *Week 7* |Friday December 8 |9:00-12:00 | More on Data Modelling |
+| *Week 8* | Friday December 15 |9:00-12:00 | Time for working on the report / catching up |
+| *Recap* |Friday - December 22 |9:00-12:00 | Recap Lecture + Assistance with Report |
 |  | *Christmas break!*  |    |    | 
 | *Presentations * |Friday - January 12 |9:00-12:00 | Presentations (pt.1) |
 | *Presentations * |Friday - January 19 |9:00-12:00 | Presentations (pt.2) |
@@ -161,6 +161,8 @@ The data that should be used for the assignments can be found here.
 After the weekly deadline, the solution to the assignment will be uploaded here. (This will be after the following lecture.)
 
 - [Solution Assignment 1](Contents/Assignments/Assignment-Week-One-Solutions.html){target="_blank"}
+- [Solution Assignment 2](Contents/Assignments/Assignment-Week-Two-Solutions.html){target="_blank"}
+- [Solution Assignment 3](Contents/Assignments/Assignment-week-three-solutions.html){target="_blank"}
 
 # Assessment
 
