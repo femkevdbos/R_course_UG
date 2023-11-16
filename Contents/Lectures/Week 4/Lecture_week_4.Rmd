@@ -110,7 +110,7 @@ e.	Present the data in your report and make sure you are easily able to explain 
 - What type of graphs will be in your report/presentation?
 
 ## Why Visualize?
-<img src="figures/datasaurus.gif" style="display:block;width:90%;margin:0 auto;"></img>
+<img src="figures/DataSaurus.gif" style="display:block;width:90%;margin:0 auto;"></img>
 
 <p style="text-align:center;font-style:italic;font-size:0.5em;">Source: https://www.autodeskresearch.com/publications/samestats</p>
 
