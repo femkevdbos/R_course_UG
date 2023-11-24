@@ -147,6 +147,7 @@ The deadline for each assignment is before the next lecture!
 - [Assignment 2 (Deadline: Thursday 02-11-2023)](Contents/Assignments/Week 2 Assignment.pdf)
 - [Assignment 3 (Deadline: Thursday 09-11-2023)](Contents/Assignments/Week 3 Assignment.pdf)
 - [Assignment 4 (Deadline: Thursday 23-11-2023)](Contents/Assignments/Week 4 Assignment.pdf)
+- [Assignment 5 (Deadline: Thursday 30-11-2023)](Contents/Assignments/Week 5 Assignment.pdf)
 
 
 ### Data
@@ -164,6 +165,7 @@ After the weekly deadline, the solution to the assignment will be uploaded here.
 - [Solution Assignment 1](Contents/Assignments/Assignment-Week-One-Solutions.html){target="_blank"}
 - [Solution Assignment 2](Contents/Assignments/Assignment-Week-Two-Solutions.html){target="_blank"}
 - [Solution Assignment 3](Contents/Assignments/Assignment-week-three-solutions.html){target="_blank"}
+- [Solution Assignment 4](Contents/Assignments/Assignment-four-solutions.html){target="_blank"}
 
 # Assessment
 

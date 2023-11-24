@@ -72,7 +72,7 @@ library(tidyverse)
 
 ## Choosing a graph
 <center>
-<img src="figures/choose_graphave_script.png" alt="HTML5 Icon" height = 95%>
+<img src="figures/choose_graph.png" alt="HTML5 Icon" height = 95%>
 </center>
 
 ## Five named graphs
